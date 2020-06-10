@@ -1,5 +1,8 @@
-import { EReduxActionTypes } from './actions.types';
+import { EReduxActionTypes, User } from './actions.types';
 
-export const userLoggedIn = (loggedIn: boolean) => {
-  return { type: EReduxActionTypes.LOG_IN, loggedIn };
+export const updateUser = (user: User) => {
+  return {
+    type: EReduxActionTypes.UPDATE_USER,
+    payload: user,
+  };
 };

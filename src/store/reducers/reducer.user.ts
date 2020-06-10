@@ -1,15 +1,24 @@
 import { combineReducers } from 'redux';
-import { UserActionTypes } from '../actions/actions.types';
+import {
+  UserActionType,
+  EReduxActionTypes,
+  User,
+} from '../actions/actions.types';
 
-const loggedIn = (state = false, action: UserActionTypes) => {
+const initialState: User = {
+  name: undefined,
+  loggedIn: false,
+};
+
+const updateUser = (state = initialState, action: UserActionType): User => {
   switch (action.type) {
-    case 'USER_LOGIN':
-      return action.loggedIn;
+    case EReduxActionTypes.UPDATE_USER:
+      return action.payload;
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  loggedIn,
+  data: updateUser,
 });
