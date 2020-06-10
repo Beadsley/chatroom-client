@@ -14,6 +14,8 @@ const updateUser = (state = initialState, action: UserActionType): User => {
   switch (action.type) {
     case EReduxActionTypes.UPDATE_USER:
       return action.payload;
+    case EReduxActionTypes.LOG_OUT:
+      return initialState;
     default:
       return state;
   }

@@ -6,3 +6,9 @@ export const updateUser = (user: User) => {
     payload: user,
   };
 };
+
+export const logOutUser = () => {
+  return {
+    type: EReduxActionTypes.LOG_OUT,
+  };
+};

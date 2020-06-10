@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormProps } from '../types';
-import { updateUser } from '../store/actions/actions.user';
+import { updateUser, logOutUser } from '../store/actions/actions.user';
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
@@ -21,6 +21,10 @@ const LoginForm: React.FC<FormProps> = (props) => {
     setName('');
   };
 
+  const handleLogOut = () => {
+    dispatch(logOutUser());
+  };
+
   return (
     <div>
       <h1>{props.title}</h1>
@@ -35,6 +39,7 @@ const LoginForm: React.FC<FormProps> = (props) => {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
+      <button onClick={handleLogOut}>LogOut</button>
     </div>
   );
 };
