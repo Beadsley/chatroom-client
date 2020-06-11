@@ -16,5 +16,3 @@ export interface UserActionType {
   type: string;
   payload: User;
 }
-
-// export type UserActionTypes = UserActionType | ErrorActionType;
