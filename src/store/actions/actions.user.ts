@@ -19,3 +19,16 @@ export const newUser = (name: string) => {
     payload: { name },
   };
 };
+
+export const connectUser = () => {
+  return {
+    type: EReduxUserActionTypes.CONNECT_USER,
+  };
+};
+
+export const logginError = (error: { type: string; message: string }) => {
+  return {
+    type: EReduxUserActionTypes.LOGIN_ERROR,
+    payload: { error },
+  };
+};

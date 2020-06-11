@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
 import { MiddlewareAPI, Dispatch, Middleware, AnyAction } from 'redux';
 import { appendMessage, sendMessage } from '../actions/actions.messages';
-import { Message } from '../actions/actions.messages.types';
+import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
+import { logginError } from '../actions/actions.user';
 import { EReduxUserActionTypes } from '../actions/actions.user.types';
-import { EReduxMessageActionTypes } from '../actions/actions.messages.types';
 import { constants } from '../../types';
 export let socket = io(constants.ROOT_URL);
 
@@ -11,16 +11,20 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
   const returnValue = next(action);
   console.log('action:', action);
 
-  if (action.type === 'UPDATE_USER') {
+  if (action.type === EReduxUserActionTypes.CONNECT_USER) {
     // 'change to loginsuccess or something
     socket.on('chat-message', (message: Message) => {
       console.log('received', message);
       api.dispatch(appendMessage(message));
     });
+
+    socket.on('login_error', (error: { type: string; message: string }) => {
+      api.dispatch(logginError(error));
+    });
   } else if (action.type === EReduxUserActionTypes.NEW_USER) {
     socket.emit('new-user', action.payload.name);
-  } else if(action.type === EReduxMessageActionTypes.SEND_MESSAGE){
-    socket.emit('send-chat-message', action.payload); 
+  } else if (action.type === EReduxMessageActionTypes.SEND_MESSAGE) {
+    socket.emit('send-chat-message', action.payload);
   }
 
   console.log('state after dispatch', api.getState());

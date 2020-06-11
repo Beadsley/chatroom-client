@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormProps } from '../types';
-import { updateUser, newUser } from '../store/actions/actions.user';
+import { updateUser, newUser, connectUser } from '../store/actions/actions.user';
+import { User } from '../store/actions/actions.user.types';
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
@@ -13,12 +14,14 @@ const LoginForm: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user = {
+    const user: User = {
       name,
       loggedIn: true,
+      error: null,
     };
+    dispatch(connectUser());
     dispatch(newUser(name));
-    dispatch(updateUser(user));
+    // dispatch(updateUser(user));
     setName('');
   };
 
