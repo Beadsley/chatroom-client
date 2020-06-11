@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose, Middleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers/reducer.root';
 import { User } from './actions/actions.user.types';
 import thunk from 'redux-thunk';
