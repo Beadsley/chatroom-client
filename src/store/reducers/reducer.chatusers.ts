@@ -11,6 +11,10 @@ const appendChatuser = (state = [], action: ChatuserActionType): Chatuser[] => {
         inactive: false,
       };
       return [...state, chatuser];
+    case EReduxChatuserActionTypes.CHATUSER_DISCONNECTED:
+      return state.map((user: Chatuser) =>
+        user.name === action.payload.name ? { ...user, connected: false, disconnected: true } : user
+      );
     default:
       return state;
   }

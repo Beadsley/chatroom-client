@@ -4,7 +4,7 @@ import { appendMessage, sendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
 import { logginError, updateUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
-import { appendChatuser } from '../actions/actions.chatusers';
+import { appendChatuser, disconnectChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
 export let socket = io(constants.ROOT_URL);
 
@@ -34,6 +34,10 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       names.forEach((name) => {
         api.dispatch(appendChatuser(name));
       });
+    });
+
+    socket.on('user-disconnected', (name: string) => {
+      api.dispatch(disconnectChatuser(name));
     });
 
     socket.on('user-connected', (name: string) => {
