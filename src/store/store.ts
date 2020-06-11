@@ -3,9 +3,11 @@ import rootReducer from './reducers/reducer.root';
 import { User } from './actions/actions.user.types';
 import thunk from 'redux-thunk';
 import socketMiddleware from './middlewares/middleware.socket';
+import { Message } from './actions/actions.messages.types';
 
 export interface RootState {
   user: { data: User };
+  messages: { data: Message[] };
 }
 
 const composeEnhancers =

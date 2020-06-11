@@ -3,22 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logOutUser } from '../store/actions/actions.user';
 import { RootState } from '../store/store';
 import { socket } from '../config';
+import { appendMessage } from '../store/actions/actions.messages';
+import { Message } from '../store/actions/actions.messages.types';
 
-interface Message {
-  message: string;
-  name: string | undefined;
-}
 const ChatRoom: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.data);
+  const messages = useSelector((state: RootState) => state.messages.data);
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  useEffect(() => {
-    socket.on('chat-message', (data: Message) => {
-      setMessages((prevState) => [...prevState, { name: data.name, message: data.message }]);
-    });
-  }, []);
 
   const handleLogOut = () => {
     dispatch(logOutUser());
@@ -34,8 +26,10 @@ const ChatRoom: React.FC = () => {
       message: userInput,
       name: user.name,
     };
-    setMessages((prevState) => [...prevState, message]);
+
     socket.emit('send-chat-message', message);
+    setUserInput('');
+    dispatch(appendMessage(message))
   };
 
   return (
