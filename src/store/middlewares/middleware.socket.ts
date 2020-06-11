@@ -50,6 +50,8 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
     socket.emit('new-user', action.payload.name);
   } else if (action.type === EReduxMessageActionTypes.SEND_MESSAGE) {
     socket.emit('send-chat-message', action.payload);
+  } else if (action.type === EReduxUserActionTypes.LOG_OUT) {
+    socket.emit('logout');
   }
 
   console.log('state after dispatch', api.getState());
