@@ -4,7 +4,7 @@ import { appendMessage, sendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
 import { logginError, updateUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
-import { appendChatuser, disconnectChatuser } from '../actions/actions.chatusers';
+import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
 export let socket = io(constants.ROOT_URL);
 
@@ -36,12 +36,15 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       });
     });
 
+    socket.on('user-connected', (name: string) => {
+      api.dispatch(appendChatuser(name));
+    });
+
     socket.on('user-disconnected', (name: string) => {
       api.dispatch(disconnectChatuser(name));
     });
-
-    socket.on('user-connected', (name: string) => {
-      api.dispatch(appendChatuser(name));
+    socket.on('user-inactive', (name: string) => {
+      api.dispatch(inactiveChatuser(name));
     });
   } else if (action.type === EReduxUserActionTypes.NEW_USER) {
     socket.emit('new-user', action.payload.name);

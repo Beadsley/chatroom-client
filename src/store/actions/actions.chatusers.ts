@@ -13,3 +13,10 @@ export const disconnectChatuser = (name: string) => {
     payload: { name },
   };
 };
+
+export const inactiveChatuser = (name: string) => {
+  return {
+    type: EReduxChatuserActionTypes.CHATUSER_INACTIVE,
+    payload: { name },
+  };
+};
