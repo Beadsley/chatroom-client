@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOutUser } from '../store/actions/actions.user';
 import { RootState } from '../store/store';
-import { socket } from '../config';
-import { appendMessage } from '../store/actions/actions.messages';
+import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
 
 const ChatRoom: React.FC = () => {
@@ -27,9 +26,10 @@ const ChatRoom: React.FC = () => {
       name: user.name,
     };
 
-    socket.emit('send-chat-message', message);
+    // socket.emit('send-chat-message', message);
+    dispatch(sendMessage(message));
+    dispatch(appendMessage(message));
     setUserInput('');
-    dispatch(appendMessage(message))
   };
 
   return (

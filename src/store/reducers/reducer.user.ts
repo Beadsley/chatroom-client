@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import {
   UserActionType,
-  EReduxActionTypes,
+  EReduxUserActionTypes,
   User,
 } from '../actions/actions.user.types';
 
@@ -12,9 +12,9 @@ const initialState: User = {
 
 const updateUser = (state = initialState, action: UserActionType): User => {
   switch (action.type) {
-    case EReduxActionTypes.UPDATE_USER:
+    case EReduxUserActionTypes.UPDATE_USER:
       return action.payload;
-    case EReduxActionTypes.LOG_OUT:
+    case EReduxUserActionTypes.LOG_OUT:
       return initialState;
     default:
       return state;

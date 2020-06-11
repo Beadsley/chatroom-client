@@ -1,5 +1,6 @@
-export enum EReduxActionTypes {
+export enum EReduxUserActionTypes {
   UPDATE_USER = 'UPDATE_USER',
+  NEW_USER = 'NEW_USER',
   LOG_OUT = 'LOG_OUT',
 }
 
@@ -12,3 +13,5 @@ export interface UserActionType {
   type: string;
   payload: User;
 }
+
+

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { Message, MessageActionType, EReduxActionTypes } from '../actions/actions.messages.types';
+import { Message, MessageActionType, EReduxMessageActionTypes } from '../actions/actions.messages.types';
 
 const appendMessage = (state = [], action: MessageActionType): Message[] => {
   switch (action.type) {
-    case EReduxActionTypes.MESSAGE_RECEIVED:
+    case EReduxMessageActionTypes.MESSAGE_RECEIVED:
       return [...state, action.payload];
     default:
       return state;

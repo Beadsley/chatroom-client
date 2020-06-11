@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormProps } from '../types';
-import { updateUser } from '../store/actions/actions.user';
-import { addNewUser } from '../store/actions/actions.emit';
-import { socket } from '../config';
+import { updateUser, newUser } from '../store/actions/actions.user';
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
@@ -19,10 +17,8 @@ const LoginForm: React.FC<FormProps> = (props) => {
       name,
       loggedIn: true,
     };
-    dispatch(addNewUser(name));
+    dispatch(newUser(name));
     dispatch(updateUser(user));
-    // const d = socket.emit('new-user', name); //services ??
-    // console.log(d);
     setName('');
   };
 
