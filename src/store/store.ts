@@ -1,7 +1,8 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, Middleware } from 'redux';
 import rootReducer from './reducers/reducer.root';
 import { User } from './actions/actions.user.types';
 import thunk from 'redux-thunk';
+import socketMiddleware from './middlewares/middleware.socket';
 
 export interface RootState {
   user: { data: User };
@@ -12,5 +13,5 @@ const composeEnhancers =
 
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(thunk, socketMiddleware))
 );
