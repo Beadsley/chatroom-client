@@ -1,13 +1,19 @@
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers/reducer.root';
+import { User } from './actions/actions.user.types';
+import thunk from 'redux-thunk';
+import socketMiddleware from './middlewares/middleware.socket';
+import { Message } from './actions/actions.messages.types';
+
+export interface RootState {
+  user: { data: User };
+  messages: { data: Message[] };
+}
 
 const composeEnhancers =
   (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
-  undefined,
-  composeEnhancers()
+  composeEnhancers(applyMiddleware(thunk, socketMiddleware))
 );
-
-export default store;

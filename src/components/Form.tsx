@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormProps } from '../types';
-import { updateUser, logOutUser } from '../store/actions/actions.user';
+import { updateUser, newUser, connectUser } from '../store/actions/actions.user';
+import { User } from '../store/actions/actions.user.types';
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
@@ -13,33 +14,24 @@ const LoginForm: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user = {
+    const user: User = {
       name,
       loggedIn: true,
+      error: null,
     };
-    dispatch(updateUser(user));
+    dispatch(connectUser());
+    dispatch(newUser(name));
+    // dispatch(updateUser(user));
     setName('');
-  };
-
-  const handleLogOut = () => {
-    dispatch(logOutUser());
   };
 
   return (
     <div>
       <h1>{props.title}</h1>
       <form>
-        <input
-          type='text'
-          required
-          placeholder='name'
-          autoComplete='off'
-          value={name}
-          onChange={handleChange}
-        />
+        <input type='text' required placeholder='name' autoComplete='off' value={name} onChange={handleChange} />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <button onClick={handleLogOut}>LogOut</button>
     </div>
   );
 };
