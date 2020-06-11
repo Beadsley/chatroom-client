@@ -30,9 +30,15 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       api.dispatch(updateUser(user));
     });
 
-    socket.on('user-connected', (name:string) => {
-      api.dispatch(appendChatuser(name))
-    })
+    socket.on('current-users', (names: string[]) => {
+      names.forEach((name) => {
+        api.dispatch(appendChatuser(name));
+      });
+    });
+
+    socket.on('user-connected', (name: string) => {
+      api.dispatch(appendChatuser(name));
+    });
   } else if (action.type === EReduxUserActionTypes.NEW_USER) {
     socket.emit('new-user', action.payload.name);
   } else if (action.type === EReduxMessageActionTypes.SEND_MESSAGE) {
