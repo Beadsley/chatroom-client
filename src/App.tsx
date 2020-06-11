@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './components/Form';
 import { useSelector } from 'react-redux';
-import { User } from './store/actions/actions.types';
+import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
 import ChatRoom from './components/ChatRoom';
 

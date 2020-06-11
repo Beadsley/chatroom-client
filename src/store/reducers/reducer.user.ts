@@ -3,7 +3,7 @@ import {
   UserActionType,
   EReduxActionTypes,
   User,
-} from '../actions/actions.types';
+} from '../actions/actions.user.types';
 
 const initialState: User = {
   name: undefined,

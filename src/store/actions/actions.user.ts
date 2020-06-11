@@ -1,4 +1,4 @@
-import { EReduxActionTypes, User } from './actions.types';
+import { EReduxActionTypes, User } from './actions.user.types';
 
 export const updateUser = (user: User) => {
   return {
