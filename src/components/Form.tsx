@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormProps } from '../types';
-import { updateUser, logOutUser } from '../store/actions/actions.user';
+import { updateUser } from '../store/actions/actions.user';
+import { socket } from "../config";
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
@@ -17,13 +18,12 @@ const LoginForm: React.FC<FormProps> = (props) => {
       name,
       loggedIn: true,
     };
-    dispatch(updateUser(user));
+    dispatch(updateUser(user)); 
+    socket.emit('new-user', name);  //services ??
     setName('');
   };
 
-  const handleLogOut = () => {
-    dispatch(logOutUser());
-  };
+
 
   return (
     <div>
@@ -39,7 +39,7 @@ const LoginForm: React.FC<FormProps> = (props) => {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <button onClick={handleLogOut}>LogOut</button>
+
     </div>
   );
 };
