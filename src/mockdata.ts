@@ -3,15 +3,15 @@ interface MockMessage {
   name: string;
 }
 export const mockMessages: MockMessage[] = [
-  { message: 'hey', name: 'JJ' },
-  { message: 'hey there', name: 'dan' },
-  { message: 'how are you', name: 'JJ' },
-  { message: 'pretty good ', name: 'dan' },
-  { message: 'how are you', name: 'JJ' },
-  { message: 'decent', name: 'dan' },
-  { message: 'enjoy the bbq', name: 'dan' },
-  { message: 'really did', name: 'JJ' },
-  { message: 'top notch sausages, where', name: 'JJ' },
+  { message: 'hey', name: 'dan' },
+  { message: 'hey there', name: 'Simon' },
+  { message: 'how are you', name: 'dan' },
+  { message: 'pretty good ', name: 'Simon' },
+  { message: 'how are you', name: 'dan' },
+  { message: 'decent', name: 'Simon' },
+  { message: 'enjoy the bbq', name: 'Simon' },
+  { message: 'really did', name: 'dan' },
+  { message: 'top notch sausages, where', name: 'Simon' },
 ];
 
 interface MockChatUsers {
