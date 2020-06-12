@@ -40,6 +40,11 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
 
       socket.on('user-connected', (name: string) => {
         api.dispatch(appendChatuser(name));
+        const message: Message = {
+          text: `${name} has joined the chat`,
+          sender: undefined,
+        };
+        api.dispatch(appendMessage(message));
       });
 
       socket.on('user-disconnected', (name: string) => {
