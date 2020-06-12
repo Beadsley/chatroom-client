@@ -8,12 +8,14 @@ const BUBBLERRADIUS = 15; // TODO constant
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    top: 60,
+    maxWidth: '70%',
     width: '100%',
     height: '100%',
   },
   list: {
     margin: 0,
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(10),
     padding: 0,
     display: 'flex',
     flexDirection: 'column',

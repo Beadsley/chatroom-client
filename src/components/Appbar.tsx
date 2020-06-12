@@ -5,7 +5,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    position: 'sticky',
+    position: 'fixed',
+    width: '100%',
     top: 0,
     zIndex: 5,
   },
@@ -21,8 +22,8 @@ const PrimaryAppBar: React.FC = () => {
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-          <Typography variant='h6' className={classes.title} align='center'>
-            Lets get chatty
+          <Typography variant='h4' className={classes.title} align='center'>
+            Lets Get Chatty!
           </Typography>
           <IconButton edge='end' color='inherit' aria-label='log-out'>
             <ExitToAppIcon />

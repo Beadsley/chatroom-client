@@ -12,9 +12,14 @@ import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    top: 60,
+    bottom: 0,
+    position: 'fixed',
     width: '100%',
     height: '100%',
-    maxWidth: 360,
+    maxWidth: '30%',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
     backgroundColor: '#efefef', //TODO make constant
   },
   listItemText: {

@@ -10,10 +10,10 @@ import PrimaryAppBar from './components/Appbar';
 import UsersList from './components/ChatUserList';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  chatRoomContainer: {
     display: 'flex',
-    flexDirection: 'row',
     height: '90vh',
+    justifyContent: 'flex-end',
   },
 }));
 function App() {
@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       <PrimaryAppBar />
-      <div className={classes.root}>
-        <UsersList />
+      <UsersList />
+      <div className={classes.chatRoomContainer}>
         <ChatRoom />
       </div>
     </>
