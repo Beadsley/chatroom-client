@@ -48,11 +48,11 @@ const SendMessage: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUserInput(e.target.value);
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     const message: Message = {
       text: userInput,
