@@ -27,6 +27,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const user: User = {
           name,
           loggedIn: true,
+          connected: true,
           error: null,
         };
         api.dispatch(updateUser(user));

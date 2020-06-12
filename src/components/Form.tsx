@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormProps } from '../types';
+import { RootState } from "../store/store";
 import { updateUser, newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
 
 const LoginForm: React.FC<FormProps> = (props) => {
   const [name, setName] = useState('');
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState): User => state.user.data);  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -14,14 +16,8 @@ const LoginForm: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const user: User = {
-      name,
-      loggedIn: true,
-      error: null,
-    };
-    dispatch(connectUser());
+    !user.connected && dispatch(connectUser());
     dispatch(newUser(name));
-    // dispatch(updateUser(user));
     setName('');
   };
 

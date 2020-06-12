@@ -4,6 +4,7 @@ import {
   ChatuserActionType,
   EReduxChatuserActionTypes,
 } from '../actions/actions.chatusers.types';
+import { EReduxUserActionTypes } from '../actions/actions.user.types';
 
 const appendChatuser = (state = [], action: ChatuserActionType): Chatuser[] => {
   switch (action.type) {
@@ -18,9 +19,11 @@ const appendChatuser = (state = [], action: ChatuserActionType): Chatuser[] => {
         },
       ];
     case EReduxChatuserActionTypes.CHATUSER_DISCONNECTED:
-      return state.filter((user: Chatuser) => user.name !== action.payload.name);
+      return [...state.filter((user: Chatuser) => user.name !== action.payload.name)];
     case EReduxChatuserActionTypes.CHATUSER_INACTIVE:
-      return state.filter((user: Chatuser) => user.name !== action.payload.name);
+      return [...state.filter((user: Chatuser) => user.name !== action.payload.name)];
+      case EReduxUserActionTypes.LOG_OUT:
+        return [];  
     default:
       return state;
   }

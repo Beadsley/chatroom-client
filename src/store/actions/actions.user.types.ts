@@ -9,6 +9,7 @@ export enum EReduxUserActionTypes {
 export interface User {
   name: string | undefined;
   loggedIn: boolean;
+  connected: boolean;
   error: { type: string; message: string } | null;
 }
 
