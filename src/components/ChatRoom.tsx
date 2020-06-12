@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { Chatuser } from '../store/actions/actions.chatusers.types';
 import { mockMessages as messages, mockChatusers, mockUser as user } from '../mockdata';
 import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
@@ -71,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 const ChatRoom: React.FC = () => {
   const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const user = useSelector((state: RootState): User => state.user.data);
+  const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
   const classes = useStyles();
 
   const showName = (index: number, name: string | undefined) => {

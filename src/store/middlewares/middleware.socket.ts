@@ -8,7 +8,9 @@ import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions
 import { constants } from '../../types';
 export const socket = io(constants.ROOT_URL);
 
-const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (action) => {
+const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
+  action
+) => {
   const returnValue = next(action);
   console.log('action:', action);
   switch (action.type) {
@@ -42,9 +44,19 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
 
       socket.on('user-disconnected', (name: string) => {
         api.dispatch(disconnectChatuser(name));
+        const message: Message = {
+          message: `${name} has left the chat`,
+          name: undefined,
+        };
+        api.dispatch(appendMessage(message));
       });
       socket.on('user-inactive', (name: string) => {
         api.dispatch(inactiveChatuser(name));
+        const message: Message = {
+          message: `${name} has left the chat`,
+          name: undefined,
+        };
+        api.dispatch(appendMessage(message));
       });
       break;
     case EReduxUserActionTypes.NEW_USER:

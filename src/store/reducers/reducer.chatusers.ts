@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import { Chatuser, ChatuserActionType, EReduxChatuserActionTypes } from '../actions/actions.chatusers.types';
+import {
+  Chatuser,
+  ChatuserActionType,
+  EReduxChatuserActionTypes,
+} from '../actions/actions.chatusers.types';
 
 const appendChatuser = (state = [], action: ChatuserActionType): Chatuser[] => {
   switch (action.type) {
@@ -14,13 +18,9 @@ const appendChatuser = (state = [], action: ChatuserActionType): Chatuser[] => {
         },
       ];
     case EReduxChatuserActionTypes.CHATUSER_DISCONNECTED:
-      return state.map((user: Chatuser) =>
-        user.name === action.payload.name ? { ...user, connected: false, disconnected: true } : user
-      );
+      return state.filter((user: Chatuser) => user.name !== action.payload.name);
     case EReduxChatuserActionTypes.CHATUSER_INACTIVE:
-      return state.map((user: Chatuser) =>
-        user.name === action.payload.name ? { ...user, connected: false, inactive: true } : user
-      );
+      return state.filter((user: Chatuser) => user.name !== action.payload.name);
     default:
       return state;
   }
