@@ -15,23 +15,26 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     marginTop: theme.spacing(2),
     padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  listItem: {
+    display: 'flex',
+    flex: 1,
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(0.5),
+    maxWidth: '50%',
   },
   sender: {
+    alignSelf: 'flex-start',
     background: '#eee', // TODO constant
-    float: 'left',
     marginLeft: theme.spacing(1),
     borderTopRightRadius: BUBBLERRADIUS,
     borderTopLeftRadius: BUBBLERRADIUS,
     borderBottomRightRadius: BUBBLERRADIUS,
   },
-  listItem: {
-    display: 'inline-block',
-    clear: 'both',
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(0.5),
-  },
   user: {
-    float: 'right',
+    alignSelf: 'flex-end',
     background: '#0084ff', //TODO constant
     color: theme.palette.background.paper,
     marginRight: theme.spacing(1),
@@ -48,7 +51,9 @@ const ChatRoom: React.FC = () => {
       <div className={classes.root}>
         <ul className={classes.list}>
           {mockMessages.map((message) => (
-            <li className={`${mockUser.name===message.name?classes.user:classes.sender} ${classes.listItem}`}>{message.message}</li>
+            <li className={`${mockUser.name === message.name ? classes.user : classes.sender} ${classes.listItem}`}>
+              {message.message}
+            </li>
           ))}
         </ul>
       </div>
