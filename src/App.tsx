@@ -35,21 +35,24 @@ const theme = createMuiTheme({
 
 function App() {
   const classes = useStyles();
-  // const user = useSelector((state: RootState): User => state.user.data);
+  const user = useSelector((state: RootState): User => state.user.data);
   // return user.loggedIn ? <ChatRoomBAsic /> : <LoginForm title='LoginForm' />;
-
-  return (
-    <>
-    <MuiThemeProvider theme = { theme }>
-      <PrimaryAppBar />
-      <UsersList />
-      <div className={classes.chatRoomContainer}>
-        <ChatRoom />
-      </div>
-      <SendMessage />
-      </MuiThemeProvider>
-    </>
-  );
+  if (user.loggedIn) {
+    return (
+      <>
+        <MuiThemeProvider theme={theme}>
+          <PrimaryAppBar />
+          <UsersList />
+          <div className={classes.chatRoomContainer}>
+            <ChatRoom />
+          </div>
+          <SendMessage />
+        </MuiThemeProvider>
+      </>
+    );
+  } else {
+    return <LoginForm title='LoginForm' />;
+  }
 }
 
 export default App;

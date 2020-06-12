@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import PrimaryAppBar from './Appbar';
-import { mockMessages, mockChatusers, mockUser } from '../mockdata';
-import UsersList from './ChatUserList';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { mockMessages as messages, mockChatusers, mockUser as user } from '../mockdata';
 import { constants } from '../types';
+import { User } from '../store/actions/actions.user.types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
@@ -67,26 +68,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatRoom: React.FC = () => {
+  const messages = useSelector((state: RootState) => state.messages.data);
+  const user = useSelector((state: RootState): User => state.user.data);
   const classes = useStyles();
 
   const showName = (index: number, name: string | undefined) => {
     return (
-      ((index > 0 && mockMessages[index - 1].name !== name) || index === 0) &&
-      mockUser.name !== name
+      ((index > 0 && messages[index - 1].name !== name) || index === 0) &&
+      user.name !== name
     );
   };
 
   const showTime = (index: number, name: string | undefined) => {
     return (
-      (index < mockMessages.length - 1 && mockMessages[index + 1].name !== name) ||
-      index === mockMessages.length - 1
+      (index < messages.length - 1 && messages[index + 1].name !== name) ||
+      index === messages.length - 1
     );
   };
   return (
     <>
       <div className={classes.root}>
         <ul className={classes.list}>
-          {mockMessages.map((message, index) => (
+          {messages.map((message, index) => (
             <>
               {message.name && showName(index, message.name) && (
                 <li className={`${classes.sendername} ${classes.listItem}`}>{message.name}</li>
@@ -94,7 +97,7 @@ const ChatRoom: React.FC = () => {
               {message.name && (
                 <li
                   className={`${
-                    mockUser.name === message.name ? classes.userBubble : classes.senderBubble
+                    user.name === message.name ? classes.userBubble : classes.senderBubble
                   } ${classes.listItem} ${classes.bubble}`}
                 >
                   {message.message}
@@ -106,7 +109,7 @@ const ChatRoom: React.FC = () => {
               {message.name && showTime(index, message.name) && (
                 <li
                   className={`${
-                    mockUser.name === message.name ? classes.usertime : classes.sendername
+                    user.name === message.name ? classes.usertime : classes.sendername
                   } ${classes.listItem}`}
                 >
                   {'9:05'}
