@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   userBubble: {
     alignSelf: 'flex-end',
-    background: '#0084ff', //TODO constant
+    background: theme.palette.secondary.main,
     color: theme.palette.background.paper,
     borderBottomLeftRadius: BUBBLERRADIUS,
   },
@@ -60,13 +60,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8em',
   },
   information: {
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: '100%',
-    paddingBottom: theme.spacing(0.5),
-    marginBottom: theme.spacing(2),
+    alignSelf: 'center',
     fontSize: '0.8em',
-    borderBottom: `0.05em solid ${constants.GREY_PRIMARY}`,
     color: constants.GREY_PRIMARY,
   },
 }));

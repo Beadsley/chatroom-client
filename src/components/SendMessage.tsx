@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles, TextField, Button } from '@material-ui/core';
+import { makeStyles, TextField, Button, withStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 import { constants } from '../types';
@@ -17,11 +17,26 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-  input: {
+  textfield: {
     display: 'flex',
     flex: 1,
   },
+  border: {
+    overrides: {
+      borderRadius: '5em',
+    },
+  },
+  input: {
+    borderRadius: 0,
+    borderTopLeftRadius: 5,
+  },
 }));
+
+const StyledButton = withStyles({
+  root: {
+    borderRadius: 0,
+  },
+})(Button);
 
 const SendMessage: React.FC = () => {
   const classes = useStyles();
@@ -30,15 +45,18 @@ const SendMessage: React.FC = () => {
     <div className={classes.root}>
       <div className={classes.container}>
         <TextField
-          className={classes.input}
+          className={classes.textfield}
           id='message-input'
           label='Type your message...'
           variant='outlined'
           autoComplete='off'
+          InputProps={{
+            className: classes.input,
+          }}
         />
-        <Button variant='contained' color='primary'>
+        <StyledButton variant='contained' color='primary'>
           <SendIcon />
-        </Button>
+        </StyledButton>
       </div>
     </div>
   );

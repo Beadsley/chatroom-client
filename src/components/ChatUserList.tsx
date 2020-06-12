@@ -7,7 +7,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from '@material-ui/core';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import FaceIcon from '@material-ui/icons/Face';
 import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 import { constants } from "../types";
 
@@ -50,13 +50,13 @@ const UsersList: React.FC = () => {
         >
           <ListItemAvatar>
             <Avatar>
-              <SupervisedUserCircleIcon />
+              <FaceIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
             classes={{ secondary: classes.listItemText }}
             primary={mockUser.name === user.name ? 'You' : user.name}
-            secondary='7:34'
+            secondary='Joined: 7:34'
           />
         </ListItem>
       ))}

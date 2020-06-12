@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  icon: {
+    fontSize: '1.4em',
+  },
 }));
 
 const PrimaryAppBar: React.FC = () => {
@@ -26,7 +29,7 @@ const PrimaryAppBar: React.FC = () => {
             Lets Get Chatty!
           </Typography>
           <IconButton edge='end' color='inherit' aria-label='log-out'>
-            <ExitToAppIcon />
+            <ExitToAppIcon className={classes.icon} />
           </IconButton>
         </Toolbar>
       </AppBar>
