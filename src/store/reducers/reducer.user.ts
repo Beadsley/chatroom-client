@@ -5,6 +5,7 @@ const initialState: User = {
   name: undefined,
   loggedIn: false,
   error: null,
+  connected: false,
 };
 
 const updateUser = (state = initialState, action: UserActionType): User => {
@@ -12,7 +13,12 @@ const updateUser = (state = initialState, action: UserActionType): User => {
     case EReduxUserActionTypes.UPDATE_USER:
       return action.payload;
     case EReduxUserActionTypes.LOG_OUT:
-      return initialState;
+      return {
+        name: undefined,
+        loggedIn: false,
+        error: null,
+        connected: true,
+      };
     case EReduxUserActionTypes.LOGIN_ERROR:
       return {
         ...state,

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
-import PrimaryAppBar from './Appbar';
-import { mockMessages, mockChatusers, mockUser } from '../mockdata';
-import UsersList from './ChatUserList';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { Chatuser } from '../store/actions/actions.chatusers.types';
+import { mockMessages as messages, mockChatusers, mockUser as user } from '../mockdata';
 import { constants } from '../types';
+import { User } from '../store/actions/actions.user.types';
+import { Message } from '../store/actions/actions.messages.types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
@@ -67,46 +70,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatRoom: React.FC = () => {
+  const messages = useSelector((state: RootState): Message[] => state.messages.data);
+  const user = useSelector((state: RootState): User => state.user.data);
+  const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
   const classes = useStyles();
 
   const showName = (index: number, name: string | undefined) => {
-    return (
-      ((index > 0 && mockMessages[index - 1].name !== name) || index === 0) &&
-      mockUser.name !== name
-    );
+    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
   };
 
   const showTime = (index: number, name: string | undefined) => {
     return (
-      (index < mockMessages.length - 1 && mockMessages[index + 1].name !== name) ||
-      index === mockMessages.length - 1
+      (index < messages.length - 1 && messages[index + 1].sender !== name) ||
+      index === messages.length - 1
     );
   };
   return (
     <>
       <div className={classes.root}>
         <ul className={classes.list}>
-          {mockMessages.map((message, index) => (
+          {messages.map((message, index) => (
             <>
-              {message.name && showName(index, message.name) && (
-                <li className={`${classes.sendername} ${classes.listItem}`}>{message.name}</li>
+              {message.sender && showName(index, message.sender) && (
+                <li className={`${classes.sendername} ${classes.listItem}`}>{message.sender}</li>
               )}
-              {message.name && (
+              {message.sender && (
                 <li
                   className={`${
-                    mockUser.name === message.name ? classes.userBubble : classes.senderBubble
+                    user.name === message.sender ? classes.userBubble : classes.senderBubble
                   } ${classes.listItem} ${classes.bubble}`}
                 >
-                  {message.message}
+                  {message.text}
                 </li>
               )}
-              {!message.name && (
-                <li className={`${classes.information} ${classes.listItem}`}>{message.message}</li>
+              {!message.sender && (
+                <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>
               )}
-              {message.name && showTime(index, message.name) && (
+              {message.sender && showTime(index, message.sender) && (
                 <li
                   className={`${
-                    mockUser.name === message.name ? classes.usertime : classes.sendername
+                    user.name === message.sender ? classes.usertime : classes.sendername
                   } ${classes.listItem}`}
                 >
                   {'9:05'}

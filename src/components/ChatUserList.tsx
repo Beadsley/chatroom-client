@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { RootState } from '../store/store';
+import { useSelector } from 'react-redux';
 import {
   makeStyles,
   List,
@@ -8,8 +10,10 @@ import {
   Avatar,
 } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
-import { mockMessages, mockChatusers, mockUser } from '../mockdata';
-import { constants } from "../types";
+import { Chatuser } from '../store/actions/actions.chatusers.types';
+import { constants } from '../types';
+import { Message } from '../store/actions/actions.messages.types';
+import { User } from '../store/actions/actions.user.types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,17 +39,20 @@ const useStyles = makeStyles((theme) => ({
 const UsersList: React.FC = () => {
   const classes = useStyles();
   const [currentUser, setCurrentUser] = useState<string | undefined>(undefined);
+  const messages = useSelector((state: RootState): Message[] => state.messages.data);
+  const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
+  const user = useSelector((state: RootState): User => state.user.data);
 
   useEffect(() => {
-    setCurrentUser(mockMessages[mockMessages.length - 1].name);
-  }, [mockMessages]);
+    messages.length > 0 && setCurrentUser(messages[messages.length - 1].sender);
+  }, [messages]);
 
   return (
     <List className={classes.root}>
-      {mockChatusers.map((user) => (
+      {chatusers.map((chatuser) => (
         <ListItem
-          key={user.name}
-          className={currentUser === user.name ? classes.selected : undefined}
+          key={chatuser.name}
+          className={currentUser === chatuser.name ? classes.selected : undefined}
           divider={true}
         >
           <ListItemAvatar>
@@ -55,7 +62,7 @@ const UsersList: React.FC = () => {
           </ListItemAvatar>
           <ListItemText
             classes={{ secondary: classes.listItemText }}
-            primary={mockUser.name === user.name ? 'You' : user.name}
+            primary={user.name === chatuser.name ? 'You' : chatuser.name}
             secondary='Joined: 7:34'
           />
         </ListItem>

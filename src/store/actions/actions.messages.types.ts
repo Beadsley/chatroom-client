@@ -4,8 +4,8 @@ export enum EReduxMessageActionTypes {
 }
 
 export interface Message {
-  message: string;
-  name: string | undefined;
+  text: string;
+  sender: string | undefined;
 }
 
 export interface MessageActionType {
