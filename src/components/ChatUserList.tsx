@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { mockMessages, mockChatusers, mockUser } from '../mockdata';
+import { constants } from "../types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '30%',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    backgroundColor: '#efefef', //TODO make constant
+    backgroundColor: constants.GREY_LIGHT, //TODO make constant
   },
   listItemText: {
     fontSize: '0.7em',

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import PrimaryAppBar from './Appbar';
 import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 import UsersList from './ChatUserList';
+import { constants } from '../types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
@@ -19,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
   listItem: {
     display: 'flex',
@@ -34,38 +37,51 @@ const useStyles = makeStyles((theme) => ({
   },
   senderBubble: {
     alignSelf: 'flex-start',
-    background: '#eee', // TODO constant
-    marginLeft: theme.spacing(1),
+    background: constants.GREY_LIGHT,
     borderBottomRightRadius: BUBBLERRADIUS,
   },
   userBubble: {
     alignSelf: 'flex-end',
     background: '#0084ff', //TODO constant
     color: theme.palette.background.paper,
-    marginRight: theme.spacing(1),
     borderBottomLeftRadius: BUBBLERRADIUS,
   },
   sendername: {
     alignSelf: 'flex-start',
-    marginLeft: theme.spacing(2),
+    color: constants.GREY_PRIMARY,
+    marginTop: theme.spacing(0.2),
+    marginBottom: theme.spacing(0.2),
+    fontSize: '0.8em',
   },
-  username: {
+  usertime: {
     alignSelf: 'flex-end',
-    marginRight: theme.spacing(2),
+    marginTop: theme.spacing(0.2),
+    color: constants.GREY_PRIMARY,
+    fontSize: '0.8em',
+  },
+  information: {
+    justifyContent: 'center',
+    width: '100%',
+    maxWidth: '100%',
+    paddingBottom: theme.spacing(0.5),
+    marginBottom: theme.spacing(2),
+    fontSize: '0.8em',
+    borderBottom: `0.05em solid ${constants.GREY_PRIMARY}`,
+    color: constants.GREY_PRIMARY,
   },
 }));
 
 const ChatRoom: React.FC = () => {
   const classes = useStyles();
 
-  const showName = (index: number, name: string) => {
+  const showName = (index: number, name: string | undefined) => {
     return (
       ((index > 0 && mockMessages[index - 1].name !== name) || index === 0) &&
       mockUser.name !== name
     );
   };
 
-  const showTime = (index: number, name: string) => {
+  const showTime = (index: number, name: string | undefined) => {
     return (
       (index < mockMessages.length - 1 && mockMessages[index + 1].name !== name) ||
       index === mockMessages.length - 1
@@ -77,20 +93,25 @@ const ChatRoom: React.FC = () => {
         <ul className={classes.list}>
           {mockMessages.map((message, index) => (
             <>
-              {showName(index, message.name) && (
+              {message.name && showName(index, message.name) && (
                 <li className={`${classes.sendername} ${classes.listItem}`}>{message.name}</li>
               )}
-              <li
-                className={`${
-                  mockUser.name === message.name ? classes.userBubble : classes.senderBubble
-                } ${classes.listItem} ${classes.bubble}`}
-              >
-                {message.message}
-              </li>
-              {showTime(index, message.name) && (
+              {message.name && (
                 <li
                   className={`${
-                    mockUser.name === message.name ? classes.username : classes.sendername
+                    mockUser.name === message.name ? classes.userBubble : classes.senderBubble
+                  } ${classes.listItem} ${classes.bubble}`}
+                >
+                  {message.message}
+                </li>
+              )}
+              {!message.name && (
+                <li className={`${classes.information} ${classes.listItem}`}>{message.message}</li>
+              )}
+              {message.name && showTime(index, message.name) && (
+                <li
+                  className={`${
+                    mockUser.name === message.name ? classes.usertime : classes.sendername
                   } ${classes.listItem}`}
                 >
                   {'9:05'}

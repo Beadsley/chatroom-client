@@ -1,9 +1,10 @@
 interface MockMessage {
   message: string;
-  name: string;
+  name: string | undefined;
 }
 export const mockMessages: MockMessage[] = [
   { message: 'hey there', name: 'Simon' },
+  { message: 'Dan has joined the chat', name: undefined },
   { message: 'hey', name: 'dan' },
   { message: 'how are you', name: 'dan' },
   { message: 'pretty good ', name: 'Simon' },
@@ -16,6 +17,7 @@ export const mockMessages: MockMessage[] = [
   { message: 'really did', name: 'dan' },
   { message: 'top notch sausages, where', name: 'Simon' },
   { message: 'really did', name: 'dan' },
+  { message: 'Jack has joined the chat', name: undefined },
   { message: 'decent', name: 'Jack' },
   { message: 'enjoy the bbq', name: 'Jack' },
 ];
