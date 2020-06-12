@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, TextField, Button, withStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 import { constants } from '../types';
+import { appendMessage, sendMessage } from '../store/actions/actions.messages';
+import { Message } from '../store/actions/actions.messages.types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,25 +43,47 @@ const StyledButton = withStyles({
 })(Button);
 
 const SendMessage: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.data);
+  const [userInput, setUserInput] = useState<string>('');
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(e.target.value);
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const message: Message = {
+      message: userInput,
+      name: user.name,
+    };
+    userInput.length !== 0 && dispatch(sendMessage(message));
+    userInput.length !== 0 && dispatch(appendMessage(message));
+    setUserInput('');
+  };
 
   return (
     <div className={classes.root}>
-      <div className={classes.container}>
-        <TextField
-          className={classes.textfield}
-          id='message-input'
-          label='Type your message...'
-          variant='outlined'
-          autoComplete='off'
-          InputProps={{
-            className: classes.input,
-          }}
-        />
-        <StyledButton variant='contained' color='primary'>
-          <SendIcon />
-        </StyledButton>
-      </div>
+      <form>
+        <div className={classes.container}>
+          <TextField
+            className={classes.textfield}
+            value={userInput}
+            onChange={handleChange}
+            id='message-input'
+            label='Type your message...'
+            variant='outlined'
+            autoComplete='off'
+            InputProps={{
+              className: classes.input,
+            }}
+          />
+          <StyledButton variant='contained' color='primary' type='submit' onClick={handleSubmit}>
+            <SendIcon />
+          </StyledButton>
+        </div>
+      </form>
     </div>
   );
 };
