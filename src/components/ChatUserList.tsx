@@ -13,7 +13,7 @@ import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '90vh',
+    height: '100%',
     maxWidth: 360,
     backgroundColor: '#efefef', //TODO make constant
   },
