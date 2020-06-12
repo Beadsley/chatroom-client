@@ -44,7 +44,7 @@ const UsersList: React.FC = () => {
   const user = useSelector((state: RootState): User => state.user.data);
 
   useEffect(() => {
-    messages.length > 0 && setCurrentUser(messages[messages.length - 1].name);
+    messages.length > 0 && setCurrentUser(messages[messages.length - 1].sender);
   }, [messages]);
 
   return (

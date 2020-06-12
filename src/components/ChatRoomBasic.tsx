@@ -23,8 +23,8 @@ const ChatRoomBasic: React.FC = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const message: Message = {
-      message: userInput,
-      name: user.name,
+      text: userInput,
+      sender: user.name,
     };
 
     // socket.emit('send-chat-message', message);
@@ -50,7 +50,7 @@ const ChatRoomBasic: React.FC = () => {
         <button onClick={handleSubmit}>Submit</button>
       </form>
       {messages.map((message) => (
-        <p>{`user:${message.name}: ${message.message}`}</p>
+        <p>{`user:${message.sender}: ${message.text}`}</p>
       ))}
     </div>
   );

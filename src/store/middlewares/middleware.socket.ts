@@ -45,16 +45,16 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       socket.on('user-disconnected', (name: string) => {
         api.dispatch(disconnectChatuser(name));
         const message: Message = {
-          message: `${name} has left the chat`,
-          name: undefined,
+          text: `${name} has left the chat`,
+          sender: undefined,
         };
         api.dispatch(appendMessage(message));
       });
       socket.on('user-inactive', (name: string) => {
         api.dispatch(inactiveChatuser(name));
         const message: Message = {
-          message: `${name} has left the chat`,
-          name: undefined,
+          text: `${name} has left the chat`,
+          sender: undefined,
         };
         api.dispatch(appendMessage(message));
       });

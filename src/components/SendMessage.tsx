@@ -55,8 +55,8 @@ const SendMessage: React.FC = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const message: Message = {
-      message: userInput,
-      name: user.name,
+      text: userInput,
+      sender: user.name,
     };
     userInput.length !== 0 && dispatch(sendMessage(message));
     userInput.length !== 0 && dispatch(appendMessage(message));
