@@ -21,39 +21,80 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     display: 'flex',
     flex: 1,
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(0.5),
     maxWidth: '50%',
   },
-  sender: {
+  bubble: {
+    marginTop: theme.spacing(0.2),
+    marginBottom: theme.spacing(0.2),
+    padding: theme.spacing(2),
+    borderTopRightRadius: BUBBLERRADIUS,
+    borderTopLeftRadius: BUBBLERRADIUS,
+  },
+  senderBubble: {
     alignSelf: 'flex-start',
     background: '#eee', // TODO constant
     marginLeft: theme.spacing(1),
-    borderTopRightRadius: BUBBLERRADIUS,
-    borderTopLeftRadius: BUBBLERRADIUS,
     borderBottomRightRadius: BUBBLERRADIUS,
   },
-  user: {
+  userBubble: {
     alignSelf: 'flex-end',
     background: '#0084ff', //TODO constant
     color: theme.palette.background.paper,
     marginRight: theme.spacing(1),
-    borderTopLeftRadius: BUBBLERRADIUS,
-    borderTopRightRadius: BUBBLERRADIUS,
     borderBottomLeftRadius: BUBBLERRADIUS,
+  },
+  sendername: {
+    alignSelf: 'flex-start',
+    marginLeft: theme.spacing(2),
+  },
+  username: {
+    alignSelf: 'flex-end',
+    marginRight: theme.spacing(2),
   },
 }));
 
 const ChatRoom: React.FC = () => {
   const classes = useStyles();
+
+  const showName = (index: number, name: string) => {
+    return (
+      ((index > 0 && mockMessages[index - 1].name !== name) || index === 0) &&
+      mockUser.name !== name
+    );
+  };
+
+  const showTime = (index: number, name: string) => {
+    return (
+      (index < mockMessages.length - 1 && mockMessages[index + 1].name !== name) ||
+      index === mockMessages.length - 1
+    );
+  };
   return (
     <>
       <div className={classes.root}>
         <ul className={classes.list}>
-          {mockMessages.map((message) => (
-            <li className={`${mockUser.name === message.name ? classes.user : classes.sender} ${classes.listItem}`}>
-              {message.message}
-            </li>
+          {mockMessages.map((message, index) => (
+            <>
+              {showName(index, message.name) && (
+                <li className={`${classes.sendername} ${classes.listItem}`}>{message.name}</li>
+              )}
+              <li
+                className={`${
+                  mockUser.name === message.name ? classes.userBubble : classes.senderBubble
+                } ${classes.listItem} ${classes.bubble}`}
+              >
+                {message.message}
+              </li>
+              {showTime(index, message.name) && (
+                <li
+                  className={`${
+                    mockUser.name === message.name ? classes.username : classes.sendername
+                  } ${classes.listItem}`}
+                >
+                  {'9:05'}
+                </li>
+              )}
+            </>
           ))}
         </ul>
       </div>
