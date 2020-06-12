@@ -3,10 +3,10 @@ import { makeStyles, TextField, Button, withStyles } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { mockMessages, mockChatusers, mockUser } from '../mockdata';
 import { constants } from '../types';
 import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
+import { User } from '../store/actions/actions.user.types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +43,7 @@ const StyledButton = withStyles({
 })(Button);
 
 const SendMessage: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.data);
+  const user = useSelector((state: RootState): User => state.user.data);
   const [userInput, setUserInput] = useState<string>('');
   const dispatch = useDispatch();
   const classes = useStyles();

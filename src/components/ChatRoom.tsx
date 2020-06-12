@@ -5,6 +5,7 @@ import { RootState } from '../store/store';
 import { mockMessages as messages, mockChatusers, mockUser as user } from '../mockdata';
 import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
+import { Message } from '../store/actions/actions.messages.types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
@@ -68,15 +69,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatRoom: React.FC = () => {
-  const messages = useSelector((state: RootState) => state.messages.data);
+  const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const user = useSelector((state: RootState): User => state.user.data);
   const classes = useStyles();
 
   const showName = (index: number, name: string | undefined) => {
-    return (
-      ((index > 0 && messages[index - 1].name !== name) || index === 0) &&
-      user.name !== name
-    );
+    return ((index > 0 && messages[index - 1].name !== name) || index === 0) && user.name !== name;
   };
 
   const showTime = (index: number, name: string | undefined) => {

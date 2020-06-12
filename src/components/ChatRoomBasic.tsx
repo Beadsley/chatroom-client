@@ -4,12 +4,13 @@ import { logOutUser } from '../store/actions/actions.user';
 import { RootState } from '../store/store';
 import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
+import { User } from '../store/actions/actions.user.types';
 
 const ChatRoomBasic: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.data);
-  const messages = useSelector((state: RootState) => state.messages.data);
+  const user = useSelector((state: RootState): User => state.user.data);
+  const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const dispatch = useDispatch();
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState<string>('');
 
   const handleLogOut = () => {
     dispatch(logOutUser());
