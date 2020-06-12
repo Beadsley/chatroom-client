@@ -8,6 +8,7 @@ import ChatRoomBAsic from './components/ChatRoomBasic';
 import ChatRoom from './components/Chatroom';
 import PrimaryAppBar from './components/Appbar';
 import UsersList from './components/ChatUserList';
+import SendMessage from './components/SendMessage';
 
 const useStyles = makeStyles((theme) => ({
   chatRoomContainer: {
@@ -28,6 +29,7 @@ function App() {
       <div className={classes.chatRoomContainer}>
         <ChatRoom />
       </div>
+        <SendMessage />
     </>
   );
 }
