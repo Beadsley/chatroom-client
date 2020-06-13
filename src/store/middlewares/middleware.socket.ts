@@ -31,8 +31,9 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         api.dispatch(appendMessage(message));
       });
 
-
       socket.on('current-users', (names: string[]) => {
+        console.log('CALllllled', names);
+
         names.forEach((name) => {
           api.dispatch(appendChatuser(name));
         });
@@ -56,8 +57,16 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         api.dispatch(appendMessage(message));
       });
       socket.on('user-inactive', (name: string) => {
+        if (api.getState().user.data.name === name) {
+          api.dispatch(logOutUser());
+        } else {
+          const message: Message = {
+            text: `${name} has left the chat`,
+            sender: undefined,
+          };
+          api.dispatch(appendMessage(message));
+        }
         api.dispatch(inactiveChatuser(name));
-        api.dispatch(logOutUser());
       });
       break;
     case EReduxUserActionTypes.NEW_USER:
