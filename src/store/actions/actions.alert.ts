@@ -14,6 +14,13 @@ export const connectionErrorAlert = (alert: Alert) => {
   };
 };
 
+export const userInactiveAlert = (alert: Alert) => {
+    return {
+      type: EReduxAlertActionTypes.USER_INACTIVE,
+      payload: alert,
+    };
+  };
+
 export const closeAlert = () => {
   return {
     type: EReduxAlertActionTypes.CLOSE_ALERT,

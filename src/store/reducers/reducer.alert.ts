@@ -13,6 +13,8 @@ const alertReducer = (state = initialState, action: AlertActionType): Alert => {
       return action.payload;
     case EReduxAlertActionTypes.CONNECTION_ERROR:
       return action.payload;
+      case EReduxAlertActionTypes.USER_INACTIVE:
+        return action.payload;
     case EReduxAlertActionTypes.CLOSE_ALERT:
       return initialState;
     default:

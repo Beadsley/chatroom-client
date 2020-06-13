@@ -4,7 +4,7 @@ import { appendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
 import { updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
-import { usernameTakenAlert, connectionErrorAlert } from '../actions/actions.alert';
+import { usernameTakenAlert, connectionErrorAlert, userInactiveAlert } from '../actions/actions.alert';
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
@@ -75,6 +75,12 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       socket.on('user-inactive', (name: string) => {
         if (api.getState().user.data.name === name) {
           api.dispatch(logOutUser());
+          const alert: Alert = {
+            type: EReduxAlertActionTypes.USER_INACTIVE,
+            activated: true,
+            message: 'Disconnected by the server due to inactivity',  //TODO constant
+          };
+          api.dispatch(userInactiveAlert(alert))
         } else {
           const message: Message = {
             text: `${name} has left the chat`,
