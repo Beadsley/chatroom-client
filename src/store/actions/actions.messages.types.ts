@@ -6,6 +6,7 @@ export enum EReduxMessageActionTypes {
 export interface Message {
   text: string;
   sender: string | undefined;
+  timestamp: Date;
 }
 
 export interface MessageActionType {

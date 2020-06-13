@@ -7,6 +7,7 @@ import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
 import { usernameTakenAlert, connectionErrorAlert, userInactiveAlert } from '../actions/actions.alert';
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
+import { currentTimestamp } from '../../services/dateHelper';
 import { constants } from '../../types';
 let socket: SocketIOClient.Socket;
 
@@ -39,15 +40,17 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
 
       socket.on('current-users', (currentusers: { name: string; joined: Date }[]) => {
         currentusers.forEach((currentuser) => {
-          api.dispatch(appendChatuser({name: currentuser.name, joined: currentuser.joined}));
+          api.dispatch(appendChatuser({ name: currentuser.name, joined: currentuser.joined }));
         });
       });
 
       socket.on('user-connected', (newUser: { name: string; joined: Date }) => {
-        api.getState().user.data.loggedIn && api.dispatch(appendChatuser({name: newUser.name, joined: newUser.joined}));
+        api.getState().user.data.loggedIn &&
+          api.dispatch(appendChatuser({ name: newUser.name, joined: newUser.joined }));
         const message: Message = {
           text: `${newUser.name} has joined the chat`,
           sender: undefined,
+          timestamp: currentTimestamp(),
         };
         api.dispatch(appendMessage(message));
       });
@@ -67,6 +70,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const message: Message = {
           text: `${name} has left the chat`,
           sender: undefined,
+          timestamp: currentTimestamp(),
         };
         api.dispatch(appendMessage(message));
       });
@@ -83,6 +87,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           const message: Message = {
             text: `${name} has left the chat`,
             sender: undefined,
+            timestamp: currentTimestamp(),
           };
           api.dispatch(appendMessage(message));
         }

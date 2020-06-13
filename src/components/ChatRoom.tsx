@@ -3,10 +3,10 @@ import { makeStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Chatuser } from '../store/actions/actions.chatusers.types';
-import { mockMessages as messages, mockChatusers, mockUser as user } from '../mockdata';
 import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
 import { Message } from '../store/actions/actions.messages.types';
+import { timeFormatter } from '../services/dateHelper';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
@@ -84,16 +84,11 @@ const ChatRoom: React.FC = () => {
   };
 
   const showName = (index: number, name: string | undefined): boolean => {
-    return (
-      ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name
-    );
+    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
   };
 
   const showTime = (index: number, name: string | undefined): boolean => {
-    return (
-      (index < messages.length - 1 && messages[index + 1].sender !== name) ||
-      index === messages.length - 1
-    );
+    return (index < messages.length - 1 && messages[index + 1].sender !== name) || index === messages.length - 1;
   };
   return (
     <>
@@ -106,23 +101,21 @@ const ChatRoom: React.FC = () => {
               )}
               {message.sender && (
                 <li
-                  className={`${
-                    user.name === message.sender ? classes.userBubble : classes.senderBubble
-                  } ${classes.listItem} ${classes.bubble}`}
+                  className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
+                    classes.listItem
+                  } ${classes.bubble}`}
                 >
                   {message.text}
                 </li>
               )}
-              {!message.sender && (
-                <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>
-              )}
+              {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
               {message.sender && showTime(index, message.sender) && (
                 <li
-                  className={`${
-                    user.name === message.sender ? classes.usertime : classes.sendername
-                  } ${classes.listItem}`}
+                  className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
+                    classes.listItem
+                  }`}
                 >
-                  {'9:05'}
+                  {timeFormatter(message.timestamp)}
                 </li>
               )}
             </>
