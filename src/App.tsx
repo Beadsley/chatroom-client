@@ -1,13 +1,12 @@
 import React from 'react';
 import LoginForm from './components/Landing';
 import { useSelector } from 'react-redux';
-import { makeStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
-import ChatRoomBAsic from './components/ChatRoomBasic';
 import PrimaryAppBar from './components/Appbar';
 import UsersList from './components/ChatUserList';
-import SendMessage from './components/SendMessage';
+import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,29 +20,28 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 }));
 
 function App() {
   const classes = useStyles();
   const user = useSelector((state: RootState): User => state.user.data);
-  // return user.loggedIn ? <ChatRoomBAsic /> : <LoginForm title='LoginForm' />;
+
   if (user.loggedIn) {
     return (
       <>
-          <PrimaryAppBar />
-          <UsersList />
-          <div className={classes.chatRoomContainer}>
-            <ChatRoom />
-          </div>
-          <SendMessage />
+        <PrimaryAppBar />
+        <UsersList />
+        <div className={classes.chatRoomContainer}>
+          <ChatRoom />
+        </div>
+        <Input />
       </>
     );
   } else {
     return (
-      <div className={classes.landingContainer} >
+      <div className={classes.landingContainer}>
         <LoginForm title='LoginForm' />
-
       </div>
     );
   }

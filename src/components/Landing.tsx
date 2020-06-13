@@ -44,7 +44,7 @@ const LoginForm: React.FC<FormProps> = (props) => {
   return (
     <div className={classes.root}>
       <Typography variant='h3' component='h2'>
-        Log In
+        Log in
       </Typography>
       <TextField
         required
