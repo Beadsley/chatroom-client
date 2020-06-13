@@ -25,10 +25,3 @@ export const connectUser = () => {
     type: EReduxUserActionTypes.CONNECT_USER,
   };
 };
-
-export const logginError = (error: { type: string; message: string }) => {
-  return {
-    type: EReduxUserActionTypes.LOGIN_ERROR,
-    payload: { error },
-  };
-};

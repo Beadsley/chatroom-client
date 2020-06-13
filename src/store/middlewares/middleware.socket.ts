@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { MiddlewareAPI, Dispatch, Middleware, AnyAction } from 'redux';
 import { appendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
-import { logginError, updateUser, logOutUser } from '../actions/actions.user';
+import { updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
 import { usernameTakenAlert } from '../actions/actions.alert';
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
@@ -19,11 +19,10 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
     case EReduxUserActionTypes.CONNECT_USER:
       socket = io(constants.ROOT_URL);
       socket.on('login_error', (error: { type: string; message: string }) => {
-        api.dispatch(logginError(error));
         const alert: Alert = {
           type: EReduxAlertActionTypes.USERNAME_TAKEN,
           activated: true,
-          message: 'Nickname already taken', //TODO constant
+          message: error.message, //TODO constant
         };
         api.dispatch(usernameTakenAlert(alert));
       });
@@ -33,7 +32,6 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           name,
           loggedIn: true,
           connected: true,
-          error: null,
         };
         api.dispatch(updateUser(user));
       });

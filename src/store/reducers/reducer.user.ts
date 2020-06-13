@@ -4,7 +4,6 @@ import { UserActionType, EReduxUserActionTypes, User } from '../actions/actions.
 const initialState: User = {
   name: undefined,
   loggedIn: false,
-  error: null,
   connected: false,
 };
 
@@ -14,11 +13,6 @@ const userReducer = (state = initialState, action: UserActionType): User => {
       return action.payload;
     case EReduxUserActionTypes.LOG_OUT:
       return initialState;
-    case EReduxUserActionTypes.LOGIN_ERROR:
-      return {
-        ...state,
-        error: action.payload.error,
-      };
     default:
       return state;
   }
