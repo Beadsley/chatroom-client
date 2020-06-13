@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Chatuser } from '../store/actions/actions.chatusers.types';
@@ -7,15 +7,16 @@ import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
 import { Message } from '../store/actions/actions.messages.types';
 import { timeFormatter } from '../services/dateHelper';
+import { ChatRoomProps, ChatRoomStyleProps } from '../types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: '70%',
+const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
+  root: (props) => ({
+    maxWidth: props.maxWidth,
     width: '100%',
     height: '100%',
-  },
+  }),
   list: {
     margin: 0,
     marginTop: theme.spacing(10),
@@ -69,11 +70,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChatRoom: React.FC = () => {
+const ChatRoom: React.FC<ChatRoomStyleProps> = (props) => {
   const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const user = useSelector((state: RootState): User => state.user.data);
   const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
-  const classes = useStyles();
+  const styleProps: ChatRoomProps = { maxWidth: props.maxWidth };
+  const classes = useStyles(styleProps);
 
   useEffect(() => {
     scrollDown();
@@ -84,11 +86,16 @@ const ChatRoom: React.FC = () => {
   };
 
   const showName = (index: number, name: string | undefined): boolean => {
-    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
+    return (
+      ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name
+    );
   };
 
   const showTime = (index: number, name: string | undefined): boolean => {
-    return (index < messages.length - 1 && messages[index + 1].sender !== name) || index === messages.length - 1;
+    return (
+      (index < messages.length - 1 && messages[index + 1].sender !== name) ||
+      index === messages.length - 1
+    );
   };
   return (
     <>
@@ -101,19 +108,21 @@ const ChatRoom: React.FC = () => {
               )}
               {message.sender && (
                 <li
-                  className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
-                    classes.listItem
-                  } ${classes.bubble}`}
+                  className={`${
+                    user.name === message.sender ? classes.userBubble : classes.senderBubble
+                  } ${classes.listItem} ${classes.bubble}`}
                 >
                   {message.text}
                 </li>
               )}
-              {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
+              {!message.sender && (
+                <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>
+              )}
               {message.sender && showTime(index, message.sender) && (
                 <li
-                  className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
-                    classes.listItem
-                  }`}
+                  className={`${
+                    user.name === message.sender ? classes.usertime : classes.sendername
+                  } ${classes.listItem}`}
                 >
                   {timeFormatter(message.timestamp)}
                 </li>
