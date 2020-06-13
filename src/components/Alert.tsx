@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
+import { RootState } from '../store/store';
 import { IconButton, Collapse } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { Alert as AlertType  } from '../store/actions/actions.alert.types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,10 +19,12 @@ const useStyles = makeStyles((theme) => ({
 const AlertMessage: React.FC = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(true);
+  const alert = useSelector((state: RootState): AlertType => state.alert.data);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-  }, []);
+    setOpen(alert.activated);
+  }, [alert]);
 
   return (
     <div className={classes.root}>
@@ -32,16 +36,16 @@ const AlertMessage: React.FC = (props) => {
               aria-label='close'
               color='inherit'
               size='small'
-                onClick={() => {
-                  setOpen(false);
-                //   dispatch(hasErrored(false));   
-                }}
+              onClick={() => {
+                setOpen(false);
+                //   dispatch(hasErrored(false));
+              }}
             >
               <CloseIcon fontSize='inherit' />
             </IconButton>
           }
         >
-          {'TestTest'}
+          {alert.message}
         </Alert>
       </Collapse>
     </div>
