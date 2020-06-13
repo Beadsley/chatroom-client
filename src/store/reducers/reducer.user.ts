@@ -4,31 +4,20 @@ import { UserActionType, EReduxUserActionTypes, User } from '../actions/actions.
 const initialState: User = {
   name: undefined,
   loggedIn: false,
-  error: null,
   connected: false,
 };
 
-const updateUser = (state = initialState, action: UserActionType): User => {
+const userReducer = (state = initialState, action: UserActionType): User => {
   switch (action.type) {
     case EReduxUserActionTypes.UPDATE_USER:
       return action.payload;
     case EReduxUserActionTypes.LOG_OUT:
-      return {
-        name: undefined,
-        loggedIn: false,
-        error: null,
-        connected: true,
-      };
-    case EReduxUserActionTypes.LOGIN_ERROR:
-      return {
-        ...state,
-        error: action.payload.error,
-      };
+      return initialState;
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  data: updateUser,
+  data: userReducer,
 });

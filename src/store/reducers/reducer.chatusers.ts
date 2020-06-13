@@ -8,7 +8,7 @@ import { EReduxUserActionTypes } from '../actions/actions.user.types';
 
 const initialState: Chatuser[] = [];
 
-const appendChatuser = (state = initialState, action: ChatuserActionType): Chatuser[] => {
+const chatUsersReducer = (state = initialState, action: ChatuserActionType): Chatuser[] => {
   switch (action.type) {
     case EReduxChatuserActionTypes.CHATUSER_CONNECTED:
       return [
@@ -32,5 +32,5 @@ const appendChatuser = (state = initialState, action: ChatuserActionType): Chatu
 };
 
 export default combineReducers({
-  data: appendChatuser,
+  data: chatUsersReducer,
 });
