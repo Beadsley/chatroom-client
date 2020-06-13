@@ -14,6 +14,7 @@ import { Chatuser } from '../store/actions/actions.chatusers.types';
 import { constants } from '../types';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';
+import { timeFormatter } from "../services/dateHelper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +64,7 @@ const UsersList: React.FC = () => {
           <ListItemText
             classes={{ secondary: classes.listItemText }}
             primary={user.name === chatuser.name ? 'You' : chatuser.name}
-            secondary='Joined: 7:34'
+            secondary= {`Joined: ${timeFormatter(chatuser.joined)}`}
           />
         </ListItem>
       ))}
