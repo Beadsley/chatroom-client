@@ -4,10 +4,8 @@ import { Typography, TextField, Button, makeStyles, withStyles } from '@material
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
-import { Alert  } from '../store/actions/actions.alert.types';
-import { closeAlert  } from '../store/actions/actions.alert';
-
-
+import { Alert } from '../store/actions/actions.alert.types';
+import { closeAlert } from '../store/actions/actions.alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +14,15 @@ const useStyles = makeStyles((theme) => ({
     width: '40%',
     '& > *': {
       margin: theme.spacing(1),
+    },
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    '& > *': {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   },
 }));
@@ -51,23 +58,26 @@ const LoginForm: React.FC = (props) => {
       <Typography variant='h3' component='h2'>
         Log in
       </Typography>
-      <TextField
-        required
-        type='text'
-        id='nickname-textfield'
-        label='Nickname'
-        autoComplete='off'
-        value={name}
-        onChange={handleChange}
-      />
-      <StyledButton
-        variant='contained'
-        color='primary'
-        onClick={handleSubmit}
-        disabled={disableButton}
-      >
-        Sign In
-      </StyledButton>
+      <form className={classes.form}>
+        <TextField
+          required
+          type='text'
+          id='nickname-textfield'
+          label='Nickname'
+          autoComplete='off'
+          value={name}
+          onChange={handleChange}
+        />
+        <StyledButton
+          variant='contained'
+          color='primary'
+          onClick={handleSubmit}
+          disabled={disableButton}
+          type='submit'
+        >
+          Sign In
+        </StyledButton>
+      </form>
     </div>
   );
 };
