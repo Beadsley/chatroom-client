@@ -7,8 +7,15 @@ export const usernameTakenAlert = (alert: Alert) => {
   };
 };
 
+export const connectionErrorAlert = (alert: Alert) => {
+  return {
+    type: EReduxAlertActionTypes.CONNECTION_ERROR,
+    payload: alert,
+  };
+};
+
 export const closeAlert = () => {
-    return {
-        type: EReduxAlertActionTypes.CLOSE_ALERT,
-      };
-}
+  return {
+    type: EReduxAlertActionTypes.CLOSE_ALERT,
+  };
+};

@@ -4,7 +4,7 @@ import { appendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
 import { updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
-import { usernameTakenAlert } from '../actions/actions.alert';
+import { usernameTakenAlert, connectionErrorAlert } from '../actions/actions.alert';
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
@@ -22,7 +22,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const alert: Alert = {
           type: EReduxAlertActionTypes.USERNAME_TAKEN,
           activated: true,
-          message: error.message, //TODO constant
+          message: error.message, 
         };
         api.dispatch(usernameTakenAlert(alert));
       });
@@ -52,6 +52,16 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           sender: undefined,
         };
         api.dispatch(appendMessage(message));
+      });
+
+      socket.on('connect_error', (error: string) => {
+        const alert: Alert = {
+          type: EReduxAlertActionTypes.CONNECTION_ERROR,
+          activated: true,
+          message: 'Server unavailable',  //TODO constant
+        };
+        api.dispatch(connectionErrorAlert(alert))
+        socket.disconnect();
       });
 
       socket.on('user-disconnected', (name: string) => {
