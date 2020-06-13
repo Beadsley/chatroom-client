@@ -50,7 +50,7 @@ const LoginForm: React.FC = (props) => {
     alert.activated && dispatch(closeAlert());
     e.preventDefault();
     !user.connected && dispatch(connectUser());
-    dispatch(newUser(name));
+    !user.awaitingResponse && dispatch(newUser(name));
     setName('');
   };
   return (
