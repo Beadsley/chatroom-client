@@ -4,19 +4,25 @@ import { appendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
 import { updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
-import { usernameTakenAlert, connectionErrorAlert, userInactiveAlert } from '../actions/actions.alert';
+import {
+  usernameTakenAlert,
+  connectionErrorAlert,
+  userInactiveAlert,
+} from '../actions/actions.alert';
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { currentTimestamp } from '../../services/dateHelper';
-import { constants } from '../../types';
+import { config } from '../../config';
 let socket: SocketIOClient.Socket;
 
-const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (action) => {
+const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
+  action
+) => {
   const returnValue = next(action);
   console.log('action:', action, socket);
   switch (action.type) {
     case EReduxUserActionTypes.CONNECT_USER:
-      socket = io(constants.ROOT_URL);
+      socket = io(config.ROOT_URL);
       socket.on('login_error', (error: { type: string; message: string }) => {
         const alert: Alert = {
           type: EReduxAlertActionTypes.USERNAME_TAKEN,
@@ -31,6 +37,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           name,
           loggedIn: true,
           connected: true,
+          awaitingResponse: false,
         };
         api.dispatch(updateUser(user));
       });
