@@ -9,6 +9,7 @@ export interface User {
   name: string | undefined;
   loggedIn: boolean;
   connected: boolean;
+  awaitingResponse: boolean;
 }
 
 export interface UserActionType {
