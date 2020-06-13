@@ -9,6 +9,7 @@ import UsersList from './components/ChatUserList';
 import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
 import Alert from './components/Alert';
+import { isBrowser } from 'react-device-detect';
 
 const useStyles = makeStyles((theme) => ({
   chatRoomContainer: {
@@ -32,11 +33,11 @@ function App() {
     return (
       <>
         <PrimaryAppBar />
-        <UsersList />
+        {isBrowser && <UsersList />}
         <div className={classes.chatRoomContainer}>
-          <ChatRoom />
+          <ChatRoom maxWidth={isBrowser ? '70%' : '100%'} />
         </div>
-        <Input />
+        <Input maxWidth={isBrowser ? '70%' : '100%'} />
       </>
     );
   } else {

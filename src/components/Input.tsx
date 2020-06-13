@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles, TextField, Button, withStyles } from '@material-ui/core';
+import { makeStyles, TextField, Button, withStyles, Theme } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -8,16 +8,17 @@ import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';
 import { currentTimestamp } from '../services/dateHelper';
+import { InputProps, InputStyleProps } from '../types';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: '70%',
+const useStyles = makeStyles<Theme, InputStyleProps>((theme) => ({
+  root: (props) => ({
+    maxWidth: props.maxWidth,
     width: '100%',
     bottom: 0,
     right: 0,
     position: 'fixed',
     backgroundColor: theme.palette.background.paper,
-  },
+  }),
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -43,11 +44,12 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const SendMessage: React.FC = () => {
+const Input: React.FC<InputProps> = (props) => {
   const user = useSelector((state: RootState): User => state.user.data);
   const [userInput, setUserInput] = useState<string>('');
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const styleProps: InputStyleProps = { maxWidth: props.maxWidth };
+  const classes = useStyles(styleProps);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUserInput(e.target.value);
@@ -90,4 +92,4 @@ const SendMessage: React.FC = () => {
   );
 };
 
-export default SendMessage;
+export default Input;
