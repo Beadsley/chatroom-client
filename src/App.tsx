@@ -8,6 +8,7 @@ import PrimaryAppBar from './components/Appbar';
 import UsersList from './components/ChatUserList';
 import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
+import Alert from './components/Alert';
 
 const useStyles = makeStyles((theme) => ({
   chatRoomContainer: {
@@ -40,9 +41,12 @@ function App() {
     );
   } else {
     return (
-      <div className={classes.landingContainer}>
-        <LoginForm title='LoginForm' />
-      </div>
+      <>
+        <Alert />
+        <div className={classes.landingContainer}>
+          <LoginForm />
+        </div>
+      </>
     );
   }
 }

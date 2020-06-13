@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, TextField, Button, makeStyles, withStyles } from '@material-ui/core';
-import { FormProps } from '../types';
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
@@ -23,7 +22,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const LoginForm: React.FC<FormProps> = (props) => {
+const LoginForm: React.FC = (props) => {
   const [name, setName] = useState<string>('');
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const dispatch = useDispatch();

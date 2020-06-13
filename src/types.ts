@@ -4,6 +4,3 @@ export enum constants {
   GREY_LIGHT = '#efefef',
   GREY_DARK = '#8c8c8c',
 }
-export interface FormProps {
-  title: string;
-}
