@@ -8,7 +8,7 @@ import { usernameTakenAlert, connectionErrorAlert, userInactiveAlert } from '../
 import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { currentTimestamp } from '../../services/dateHelper';
-import { constants } from '../../types';
+import { config } from '../../config';
 let socket: SocketIOClient.Socket;
 
 const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (action) => {
@@ -16,7 +16,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
   console.log('action:', action, socket);
   switch (action.type) {
     case EReduxUserActionTypes.CONNECT_USER:
-      socket = io(constants.ROOT_URL);
+      socket = io(config.ROOT_URL);
       socket.on('login_error', (error: { type: string; message: string }) => {
         const alert: Alert = {
           type: EReduxAlertActionTypes.USERNAME_TAKEN,
