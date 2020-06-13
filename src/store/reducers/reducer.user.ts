@@ -13,12 +13,7 @@ const updateUser = (state = initialState, action: UserActionType): User => {
     case EReduxUserActionTypes.UPDATE_USER:
       return action.payload;
     case EReduxUserActionTypes.LOG_OUT:
-      return {
-        name: undefined,
-        loggedIn: false,
-        error: null,
-        connected: false,
-      };
+      return initialState;
     case EReduxUserActionTypes.LOGIN_ERROR:
       return {
         ...state,
