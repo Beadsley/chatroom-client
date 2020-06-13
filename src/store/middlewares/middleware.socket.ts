@@ -30,6 +30,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           message: error.message,
         };
         api.dispatch(usernameTakenAlert(alert));
+        api.dispatch(logOutUser());
       });
 
       socket.on('login_success', (name: string) => {
