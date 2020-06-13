@@ -15,6 +15,7 @@ const chatUsersReducer = (state = initialState, action: ChatuserActionType): Cha
         ...state,
         {
           name: action.payload.name,
+          joined: action.payload.joined,
           connected: true,
           disconnected: false,
           inactive: false,

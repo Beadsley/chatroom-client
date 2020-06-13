@@ -7,6 +7,7 @@ import { constants } from '../types';
 import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';
+import { currentTimestamp } from '../services/dateHelper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +58,7 @@ const SendMessage: React.FC = () => {
     const message: Message = {
       text: userInput,
       sender: user.name,
+      timestamp: currentTimestamp(),
     };
     userInput.length !== 0 && dispatch(sendMessage(message));
     userInput.length !== 0 && dispatch(appendMessage(message));
