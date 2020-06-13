@@ -69,6 +69,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           message: 'Server unavailable', //TODO constant
         };
         api.dispatch(connectionErrorAlert(alert));
+        api.dispatch(logOutUser());
         socket.disconnect();
       });
 
