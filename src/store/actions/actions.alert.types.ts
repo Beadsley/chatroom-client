@@ -1,5 +1,6 @@
 export enum EReduxAlertActionTypes {
   USERNAME_TAKEN = 'USERNAME_TAKEN',
+  CLOSE_ALERT = 'CLOSE_ALERT',
 }
 
 export interface Alert {

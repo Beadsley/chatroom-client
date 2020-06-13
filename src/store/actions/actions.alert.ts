@@ -6,3 +6,9 @@ export const usernameTakenAlert = (alert: Alert) => {
     payload: alert,
   };
 };
+
+export const closeAlert = () => {
+    return {
+        type: EReduxAlertActionTypes.CLOSE_ALERT,
+      };
+}

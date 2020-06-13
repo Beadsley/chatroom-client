@@ -6,6 +6,7 @@ import { RootState } from '../store/store';
 import { IconButton, Collapse } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Alert as AlertType  } from '../store/actions/actions.alert.types';
+import { closeAlert  } from '../store/actions/actions.alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ const AlertMessage: React.FC = (props) => {
               size='small'
               onClick={() => {
                 setOpen(false);
-                //   dispatch(hasErrored(false));
+                 dispatch(closeAlert());
               }}
             >
               <CloseIcon fontSize='inherit' />

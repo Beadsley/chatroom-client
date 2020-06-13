@@ -42,8 +42,6 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       });
 
       socket.on('current-users', (names: string[]) => {
-        console.log('CALllllled', names);
-
         names.forEach((name) => {
           api.dispatch(appendChatuser(name));
         });

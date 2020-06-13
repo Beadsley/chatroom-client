@@ -4,6 +4,10 @@ import { Typography, TextField, Button, makeStyles, withStyles } from '@material
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
+import { Alert  } from '../store/actions/actions.alert.types';
+import { closeAlert  } from '../store/actions/actions.alert';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +31,7 @@ const LoginForm: React.FC = (props) => {
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState): User => state.user.data);
+  const alert = useSelector((state: RootState): Alert => state.alert.data);
   const classes = useStyles();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +40,7 @@ const LoginForm: React.FC = (props) => {
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    alert.activated && dispatch(closeAlert());
     e.preventDefault();
     !user.connected && dispatch(connectUser());
     dispatch(newUser(name));
