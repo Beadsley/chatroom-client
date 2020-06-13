@@ -10,9 +10,7 @@ import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions
 import { constants } from '../../types';
 let socket: SocketIOClient.Socket;
 
-const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
-  action
-) => {
+const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (action) => {
   const returnValue = next(action);
   console.log('action:', action, socket);
   switch (action.type) {
@@ -22,7 +20,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const alert: Alert = {
           type: EReduxAlertActionTypes.USERNAME_TAKEN,
           activated: true,
-          message: error.message, 
+          message: error.message,
         };
         api.dispatch(usernameTakenAlert(alert));
       });
@@ -39,16 +37,16 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         api.dispatch(appendMessage(message));
       });
 
-      socket.on('current-users', (names: string[]) => {
-        names.forEach((name) => {
-          api.dispatch(appendChatuser(name));
+      socket.on('current-users', (currentusers: { name: string; joined: Date }[]) => {
+        currentusers.forEach((currentuser) => {
+          api.dispatch(appendChatuser({name: currentuser.name, joined: currentuser.joined}));
         });
       });
 
-      socket.on('user-connected', (name: string) => {
-        api.getState().user.data.loggedIn && api.dispatch(appendChatuser(name));
+      socket.on('user-connected', (newUser: { name: string; joined: Date }) => {
+        api.getState().user.data.loggedIn && api.dispatch(appendChatuser({name: newUser.name, joined: newUser.joined}));
         const message: Message = {
-          text: `${name} has joined the chat`,
+          text: `${newUser.name} has joined the chat`,
           sender: undefined,
         };
         api.dispatch(appendMessage(message));
@@ -58,9 +56,9 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const alert: Alert = {
           type: EReduxAlertActionTypes.CONNECTION_ERROR,
           activated: true,
-          message: 'Server unavailable',  //TODO constant
+          message: 'Server unavailable', //TODO constant
         };
-        api.dispatch(connectionErrorAlert(alert))
+        api.dispatch(connectionErrorAlert(alert));
         socket.disconnect();
       });
 
@@ -78,9 +76,9 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           const alert: Alert = {
             type: EReduxAlertActionTypes.USER_INACTIVE,
             activated: true,
-            message: 'Disconnected by the server due to inactivity',  //TODO constant
+            message: 'Disconnected by the server due to inactivity', //TODO constant
           };
-          api.dispatch(userInactiveAlert(alert))
+          api.dispatch(userInactiveAlert(alert));
         } else {
           const message: Message = {
             text: `${name} has left the chat`,

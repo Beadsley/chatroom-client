@@ -6,6 +6,7 @@ export enum EReduxChatuserActionTypes {
 
 export interface Chatuser {
   name: string;
+  joined: Date;
   connected: boolean;
   disconnected: boolean;
   inactive: boolean;
