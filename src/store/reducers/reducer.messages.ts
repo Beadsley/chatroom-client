@@ -8,7 +8,7 @@ import { EReduxUserActionTypes } from '../actions/actions.user.types';
 
 const initialState: Message[] = [];
 
-const appendMessage = (state = initialState, action: MessageActionType): Message[] => {
+const messagesReducer = (state = initialState, action: MessageActionType): Message[] => {
   switch (action.type) {
     case EReduxMessageActionTypes.MESSAGE_RECEIVED:
       return [...state, action.payload];
@@ -20,5 +20,5 @@ const appendMessage = (state = initialState, action: MessageActionType): Message
 };
 
 export default combineReducers({
-  data: appendMessage,
+  data: messagesReducer,
 });

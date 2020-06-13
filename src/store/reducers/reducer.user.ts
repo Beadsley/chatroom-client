@@ -8,7 +8,7 @@ const initialState: User = {
   connected: false,
 };
 
-const updateUser = (state = initialState, action: UserActionType): User => {
+const userReducer = (state = initialState, action: UserActionType): User => {
   switch (action.type) {
     case EReduxUserActionTypes.UPDATE_USER:
       return action.payload;
@@ -25,5 +25,5 @@ const updateUser = (state = initialState, action: UserActionType): User => {
 };
 
 export default combineReducers({
-  data: updateUser,
+  data: userReducer,
 });
