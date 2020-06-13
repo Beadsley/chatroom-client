@@ -17,7 +17,7 @@ const updateUser = (state = initialState, action: UserActionType): User => {
         name: undefined,
         loggedIn: false,
         error: null,
-        connected: true,
+        connected: false,
       };
     case EReduxUserActionTypes.LOGIN_ERROR:
       return {

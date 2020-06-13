@@ -6,15 +6,16 @@ import { logginError, updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
-export const socket = io(constants.ROOT_URL);
+let socket: SocketIOClient.Socket;
 
 const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
   action
 ) => {
   const returnValue = next(action);
-  console.log('action:', action);
+  console.log('action:', action, socket);
   switch (action.type) {
     case EReduxUserActionTypes.CONNECT_USER:
+      socket = io(constants.ROOT_URL);
       socket.on('chat-message', (message: Message) => {
         api.dispatch(appendMessage(message));
       });
@@ -40,7 +41,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       });
 
       socket.on('user-connected', (name: string) => {
-        api.getState().user.data.loggedIn && api.dispatch(appendChatuser(name));        
+        api.getState().user.data.loggedIn && api.dispatch(appendChatuser(name));
         const message: Message = {
           text: `${name} has joined the chat`,
           sender: undefined,
@@ -74,6 +75,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       break;
     case EReduxUserActionTypes.LOG_OUT:
       socket.emit('logout');
+      socket.disconnect();
   }
 
   console.log('state after dispatch', api.getState());
