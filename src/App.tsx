@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './components/Landing';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
 import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
 import PrimaryAppBar from './components/Appbar';
@@ -10,6 +10,7 @@ import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
 import Alert from './components/Alert';
 import { isBrowser } from 'react-device-detect';
+import ReactLoading from 'react-loading';
 
 const useStyles = makeStyles((theme) => ({
   chatRoomContainer: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const user = useSelector((state: RootState): User => state.user.data);
+  const theme = useTheme();
 
   if (user.loggedIn) {
     return (
@@ -45,7 +47,16 @@ function App() {
       <>
         <Alert />
         <div className={classes.landingContainer}>
-          <LoginForm />
+          {user.awaitingResponse ? (
+            <ReactLoading
+              type='spin'
+              color={theme.palette.primary.main}
+              height={'25%'}
+              width={'20%'}
+            />
+          ) : (
+            <LoginForm />
+          )}
         </div>
       </>
     );
