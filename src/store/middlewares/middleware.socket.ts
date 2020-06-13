@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { MiddlewareAPI, Dispatch, Middleware, AnyAction } from 'redux';
 import { appendMessage } from '../actions/actions.messages';
 import { EReduxMessageActionTypes, Message } from '../actions/actions.messages.types';
-import { logginError, updateUser } from '../actions/actions.user';
+import { logginError, updateUser, logOutUser } from '../actions/actions.user';
 import { EReduxUserActionTypes, User } from '../actions/actions.user.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { constants } from '../../types';
@@ -40,7 +40,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       });
 
       socket.on('user-connected', (name: string) => {
-        api.dispatch(appendChatuser(name));
+        api.getState().user.data.loggedIn && api.dispatch(appendChatuser(name));        
         const message: Message = {
           text: `${name} has joined the chat`,
           sender: undefined,
@@ -58,6 +58,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       });
       socket.on('user-inactive', (name: string) => {
         api.dispatch(inactiveChatuser(name));
+        api.dispatch(logOutUser());
         const message: Message = {
           text: `${name} has left the chat`,
           sender: undefined,

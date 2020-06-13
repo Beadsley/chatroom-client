@@ -24,7 +24,7 @@ const PrimaryAppBar: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleLogOut = () => {
+  const handleLogOut = (): void => {
     dispatch(logOutUser());
   };
 

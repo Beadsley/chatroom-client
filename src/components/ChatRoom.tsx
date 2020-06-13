@@ -75,11 +75,21 @@ const ChatRoom: React.FC = () => {
   const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
   const classes = useStyles();
 
-  const showName = (index: number, name: string | undefined) => {
-    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
+  useEffect(() => {
+    scrollDown();
+  }, [messages]);
+
+  const scrollDown = (): void => {
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
-  const showTime = (index: number, name: string | undefined) => {
+  const showName = (index: number, name: string | undefined): boolean => {
+    return (
+      ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name
+    );
+  };
+
+  const showTime = (index: number, name: string | undefined): boolean => {
     return (
       (index < messages.length - 1 && messages[index + 1].sender !== name) ||
       index === messages.length - 1
