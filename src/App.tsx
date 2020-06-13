@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './components/Landing';
 import { useSelector } from 'react-redux';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { makeStyles, useTheme, CircularProgress } from '@material-ui/core';
 import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
 import PrimaryAppBar from './components/Appbar';
@@ -10,7 +10,6 @@ import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
 import Alert from './components/Alert';
 import { isBrowser } from 'react-device-detect';
-import ReactLoading from 'react-loading';
 
 const useStyles = makeStyles((theme) => ({
   chatRoomContainer: {
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: '90vh',
     justifyContent: 'flex-end',
   },
-  landingContainer: {
+  container: {
     display: 'flex',
     height: '100vh',
     justifyContent: 'center',
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const user = useSelector((state: RootState): User => state.user.data);
-  const theme = useTheme();
 
   if (user.loggedIn) {
     return (
@@ -42,21 +40,18 @@ function App() {
         <Input maxWidth={isBrowser ? '70%' : '100%'} />
       </>
     );
+  } else if (user.awaitingResponse) {
+    return (
+      <div className={classes.container}>
+        <CircularProgress size='10rem' />
+      </div>
+    );
   } else {
     return (
       <>
         <Alert />
-        <div className={classes.landingContainer}>
-          {user.awaitingResponse ? (
-            <ReactLoading
-              type='spin'
-              color={theme.palette.primary.main}
-              height={'25%'}
-              width={'20%'}
-            />
-          ) : (
-            <LoginForm />
-          )}
+        <div className={classes.container}>
+          <LoginForm />
         </div>
       </>
     );
