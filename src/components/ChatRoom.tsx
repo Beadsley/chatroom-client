@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import { makeStyles, Theme, Fade } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { constants } from '../types';
@@ -26,10 +26,15 @@ const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
   },
-  listItem: {
+  container: {
     display: 'flex',
     flex: 1,
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+  },
+  listItem: {
     maxWidth: '50%',
+    listStyleType: 'none',
   },
   bubble: {
     marginTop: theme.spacing(0.2),
@@ -96,30 +101,32 @@ const ChatRoom: React.FC<ChatRoomProps> = (props) => {
       <div className={classes.root}>
         <ul className={classes.list}>
           {messages.map((message, index) => (
-            <>
-              {message.sender && showName(index, message.sender) && (
-                <li className={`${classes.sendername} ${classes.listItem}`}>{message.sender}</li>
-              )}
-              {message.sender && (
-                <li
-                  className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
-                    classes.listItem
-                  } ${classes.bubble}`}
-                >
-                  {message.text}
-                </li>
-              )}
-              {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
-              {message.sender && showTime(index, message.sender) && (
-                <li
-                  className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
-                    classes.listItem
-                  }`}
-                >
-                  {timeFormatter(message.timestamp)}
-                </li>
-              )}
-            </>
+            <Fade in={true}>
+              <div className={classes.container} key={index.toString()}>
+                {message.sender && showName(index, message.sender) && (
+                  <li className={`${classes.sendername} ${classes.listItem}`}>{message.sender}</li>
+                )}
+                {message.sender && (
+                  <li
+                    className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
+                      classes.listItem
+                    } ${classes.bubble}`}
+                  >
+                    {message.text}
+                  </li>
+                )}
+                {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
+                {message.sender && showTime(index, message.sender) && (
+                  <li
+                    className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
+                      classes.listItem
+                    }`}
+                  >
+                    {timeFormatter(message.timestamp)}
+                  </li>
+                )}
+              </div>
+            </Fade>
           ))}
         </ul>
       </div>
