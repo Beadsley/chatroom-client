@@ -19,7 +19,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
   action
 ) => {
   const returnValue = next(action);
-  console.log('action:', action, socket);
+  process.env.NODE_ENV === 'development' && console.log('action:', action, socket);
   switch (action.type) {
     case EReduxUserActionTypes.CONNECT_USER:
       socket = io(config.ROOT_URL);
@@ -114,7 +114,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       socket.disconnect();
   }
 
-  console.log('state after dispatch', api.getState());
+  process.env.NODE_ENV === 'development' && console.log('state after dispatch', api.getState());
   return returnValue;
 };
 
