@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { makeStyles, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { makeStyles, AppBar, Toolbar, Typography, IconButton, useTheme } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logOutUser } from '../store/actions/actions.user';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     position: 'fixed',
@@ -14,15 +14,18 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     flexGrow: 1,
+    color: theme.palette.background.paper,
   },
   icon: {
     fontSize: '1.4em',
+    color: theme.palette.background.paper,
   },
 }));
 
 const PrimaryAppBar: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const handleLogOut = (): void => {
     dispatch(logOutUser());
@@ -33,7 +36,7 @@ const PrimaryAppBar: React.FC = () => {
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h4' className={classes.title} align='center'>
-            Lets Get Chatty!
+            Lets get chatty!
           </Typography>
           <IconButton edge='end' color='inherit' aria-label='log-out' onClick={handleLogOut}>
             <ExitToAppIcon className={classes.icon} />
