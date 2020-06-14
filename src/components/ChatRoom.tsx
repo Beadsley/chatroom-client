@@ -11,7 +11,7 @@ import { ChatRoomProps, ChatRoomStyleProps } from '../types';
 
 const BUBBLERRADIUS = 15; // TODO constant
 
-const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
+const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
   root: (props) => ({
     maxWidth: props.maxWidth,
     width: '100%',
@@ -70,11 +70,11 @@ const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
   },
 }));
 
-const ChatRoom: React.FC<ChatRoomStyleProps> = (props) => {
+const ChatRoom: React.FC<ChatRoomProps> = (props) => {
   const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const user = useSelector((state: RootState): User => state.user.data);
   const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
-  const styleProps: ChatRoomProps = { maxWidth: props.maxWidth };
+  const styleProps: ChatRoomStyleProps = { maxWidth: props.maxWidth };
   const classes = useStyles(styleProps);
 
   useEffect(() => {

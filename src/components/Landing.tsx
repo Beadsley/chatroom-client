@@ -67,6 +67,9 @@ const LoginForm: React.FC = (props) => {
           autoComplete='off'
           value={name}
           onChange={handleChange}
+          inputProps={{
+            maxLength: 40,
+          }}
         />
         <StyledButton
           variant='contained'

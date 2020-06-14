@@ -11,10 +11,19 @@ export interface InputProps {
 export interface InputStyleProps {
   maxWidth: string;
 }
+
 export interface ChatRoomProps {
   maxWidth: string;
 }
 
 export interface ChatRoomStyleProps {
+  maxWidth: string;
+}
+
+export interface ChatUserListProps {
+  maxWidth: string;
+}
+
+export interface ChatUserListStyleProps {
   maxWidth: string;
 }

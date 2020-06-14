@@ -34,7 +34,6 @@ const useStyles = makeStyles<Theme, InputStyleProps>((theme) => ({
   },
   input: {
     borderRadius: 0,
-    borderTopLeftRadius: 5,
   },
 }));
 
