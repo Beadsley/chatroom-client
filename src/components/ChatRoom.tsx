@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { Chatuser } from '../store/actions/actions.chatusers.types';
 import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
 import { Message } from '../store/actions/actions.messages.types';

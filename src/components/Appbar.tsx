@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { makeStyles, AppBar, Toolbar, Typography, IconButton, useTheme } from '@material-ui/core';
+import { makeStyles, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logOutUser } from '../store/actions/actions.user';
 
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 const PrimaryAppBar: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const handleLogOut = (): void => {
     dispatch(logOutUser());
