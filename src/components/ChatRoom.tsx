@@ -9,9 +9,9 @@ import { Message } from '../store/actions/actions.messages.types';
 import { timeFormatter } from '../services/dateHelper';
 import { ChatRoomProps, ChatRoomStyleProps } from '../types';
 
-const BUBBLERRADIUS = 15; // TODO constant
+const BUBBLERRADIUS = 15;
 
-const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
+const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
   root: (props) => ({
     maxWidth: props.maxWidth,
     width: '100%',
@@ -38,6 +38,8 @@ const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
     padding: theme.spacing(2),
     borderTopRightRadius: BUBBLERRADIUS,
     borderTopLeftRadius: BUBBLERRADIUS,
+    display: 'inline-block',
+    wordBreak: 'break-word',
   },
   senderBubble: {
     alignSelf: 'flex-start',
@@ -70,20 +72,19 @@ const useStyles = makeStyles<Theme, ChatRoomProps>((theme) => ({
   },
 }));
 
-const ChatRoom: React.FC<ChatRoomStyleProps> = (props) => {
+const ChatRoom: React.FC<ChatRoomProps> = (props) => {
   const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const user = useSelector((state: RootState): User => state.user.data);
-  const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
-  const styleProps: ChatRoomProps = { maxWidth: props.maxWidth };
+  const styleProps: ChatRoomStyleProps = { maxWidth: props.maxWidth };
   const classes = useStyles(styleProps);
-
-  useEffect(() => {
-    scrollDown();
-  }, [messages]);
 
   const scrollDown = (): void => {
     window.scrollTo(0, document.body.scrollHeight);
   };
+
+  useEffect(() => {
+    scrollDown();
+  }, [messages]);
 
   const showName = (index: number, name: string | undefined): boolean => {
     return (

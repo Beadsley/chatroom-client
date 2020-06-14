@@ -13,13 +13,14 @@ import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { currentTimestamp } from '../../services/dateHelper';
 import { config } from '../../config';
+import { constants } from "../../types";
 let socket: SocketIOClient.Socket;
 
 const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
   action
 ) => {
   const returnValue = next(action);
-  console.log('action:', action, socket);
+  process.env.NODE_ENV === 'development' && console.log('action:', action, socket);
   switch (action.type) {
     case EReduxUserActionTypes.CONNECT_USER:
       socket = io(config.ROOT_URL);
@@ -67,7 +68,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const alert: Alert = {
           type: EReduxAlertActionTypes.CONNECTION_ERROR,
           activated: true,
-          message: 'Server unavailable', //TODO constant
+          message: constants.ALERT_MESSAGE_SERVER_UNAVAILABLE,
         };
         api.dispatch(connectionErrorAlert(alert));
         api.dispatch(logOutUser());
@@ -89,7 +90,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           const alert: Alert = {
             type: EReduxAlertActionTypes.USER_INACTIVE,
             activated: true,
-            message: 'Disconnected by the server due to inactivity', //TODO constant
+            message: constants.ALERT_MESSAGE_USER_INACTIVE,
           };
           api.dispatch(userInactiveAlert(alert));
         } else {
@@ -114,7 +115,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
       socket.disconnect();
   }
 
-  console.log('state after dispatch', api.getState());
+  process.env.NODE_ENV === 'development' && console.log('state after dispatch', api.getState());
   return returnValue;
 };
 
