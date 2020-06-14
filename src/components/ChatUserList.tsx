@@ -21,6 +21,7 @@ import { ChatUserListProps, ChatUserListStyleProps } from '../types';
 const useStyles = makeStyles<Theme, ChatUserListStyleProps>((theme) => ({
   root: (props) => ({
     maxWidth: props.maxWidth,
+    minWidth: '20%',
     top: 60,
     bottom: 0,
     position: 'fixed',
