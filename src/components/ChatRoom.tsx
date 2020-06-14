@@ -38,6 +38,8 @@ const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
     padding: theme.spacing(2),
     borderTopRightRadius: BUBBLERRADIUS,
     borderTopLeftRadius: BUBBLERRADIUS,
+    display: 'inline-block',
+    wordBreak: 'break-word',
   },
   senderBubble: {
     alignSelf: 'flex-start',
