@@ -5,8 +5,8 @@ import Alert from '@material-ui/lab/Alert';
 import { RootState } from '../store/store';
 import { IconButton, Collapse } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { Alert as AlertType  } from '../store/actions/actions.alert.types';
-import { closeAlert  } from '../store/actions/actions.alert';
+import { Alert as AlertType } from '../store/actions/actions.alert.types';
+import { closeAlert } from '../store/actions/actions.alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AlertMessage: React.FC = (props) => {
+const AlertMessage: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const alert = useSelector((state: RootState): AlertType => state.alert.data);
@@ -39,7 +39,7 @@ const AlertMessage: React.FC = (props) => {
               size='small'
               onClick={() => {
                 setOpen(false);
-                 dispatch(closeAlert());
+                dispatch(closeAlert());
               }}
             >
               <CloseIcon fontSize='inherit' />

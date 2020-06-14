@@ -33,7 +33,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const LoginForm: React.FC = (props) => {
+const LoginForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -67,6 +67,9 @@ const LoginForm: React.FC = (props) => {
           autoComplete='off'
           value={name}
           onChange={handleChange}
+          inputProps={{
+            maxLength: 40,
+          }}
         />
         <StyledButton
           variant='contained'

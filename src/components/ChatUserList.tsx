@@ -8,28 +8,35 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
+  Theme,
 } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
 import { Chatuser } from '../store/actions/actions.chatusers.types';
 import { constants } from '../types';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';
-import { timeFormatter } from "../services/dateHelper";
+import { timeFormatter } from '../services/dateHelper';
+import { ChatUserListProps, ChatUserListStyleProps } from '../types';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const useStyles = makeStyles<Theme, ChatUserListStyleProps>((theme) => ({
+  root: (props) => ({
+    maxWidth: props.maxWidth,
     top: 60,
     bottom: 0,
     position: 'fixed',
     width: '100%',
     height: '100%',
-    maxWidth: '30%',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    backgroundColor: constants.GREY_LIGHT, //TODO make constant
-  },
-  listItemText: {
+    backgroundColor: constants.GREY_LIGHT,
+  }),
+  listItemTextSecondary: {
     fontSize: '0.7em',
+  },
+  listItemTextPrimary: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   selected: {
     backgroundColor: theme.palette.background.paper,
@@ -37,12 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UsersList: React.FC = () => {
-  const classes = useStyles();
+const UsersList: React.FC<ChatUserListProps> = (props) => {
   const [currentUser, setCurrentUser] = useState<string | undefined>(undefined);
   const messages = useSelector((state: RootState): Message[] => state.messages.data);
   const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
   const user = useSelector((state: RootState): User => state.user.data);
+  const styleProps: ChatUserListStyleProps = { maxWidth: props.maxWidth };
+  const classes = useStyles(styleProps);
 
   useEffect(() => {
     messages.length > 0 && setCurrentUser(messages[messages.length - 1].sender);
@@ -62,9 +70,12 @@ const UsersList: React.FC = () => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            classes={{ secondary: classes.listItemText }}
+            classes={{
+              primary: classes.listItemTextPrimary,
+              secondary: classes.listItemTextSecondary,
+            }}
             primary={user.name === chatuser.name ? 'You' : chatuser.name}
-            secondary= {`Joined: ${timeFormatter(chatuser.joined)}`}
+            secondary={`Joined: ${timeFormatter(chatuser.joined)}`}
           />
         </ListItem>
       ))}

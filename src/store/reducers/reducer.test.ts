@@ -2,8 +2,7 @@ import reducers from './reducer.root';
 
 describe('Reducers', () => {
   test('INIT', () => {
-    let state;
-    state = reducers(undefined, {});
+    const state = reducers(undefined, {});
     expect(state).toEqual({
       user: { data: { loggedIn: false, connected: false, awaitingResponse: false } },
       messages: { data: [] },
@@ -13,8 +12,7 @@ describe('Reducers', () => {
   });
 
   test('CONNECT_USER', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { loggedIn: false, connected: false, awaitingResponse: false } },
         messages: { data: [] },
@@ -31,8 +29,7 @@ describe('Reducers', () => {
     });
   });
   test('NEW_USER', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { loggedIn: false, connected: false, awaitingResponse: false } },
         messages: { data: [] },
@@ -50,8 +47,7 @@ describe('Reducers', () => {
   });
 
   test('UPDATE_USER', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { name: 'dan', loggedIn: false, connected: false, awaitingResponse: true } },
         messages: { data: [] },
@@ -71,8 +67,7 @@ describe('Reducers', () => {
     });
   });
   test('CHATUSER_CONNECTED', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { name: 'dan', loggedIn: true, connected: true, awaitingResponse: false } },
         messages: { data: [] },
@@ -99,8 +94,7 @@ describe('Reducers', () => {
     });
   });
   test('SEND_MESSAGE', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { name: 'dan', loggedIn: true, connected: true, awaitingResponse: false } },
         messages: { data: [] },
@@ -140,8 +134,7 @@ describe('Reducers', () => {
     });
   });
   test('LOG_OUT', () => {
-    let state;
-    state = reducers(
+    const state = reducers(
       {
         user: { data: { name: 'dan', loggedIn: true, connected: true, awaitingResponse: false } },
         messages: { data: [{ text: 'dan', sender: 'dan', timestamp: '2020-06-14T05:30:10.050Z' }] },
