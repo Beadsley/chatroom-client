@@ -11,7 +11,7 @@ export interface RootState {
   user: { data: User };
   messages: { data: Message[] };
   chatusers: { data: Chatuser[] };
-  alert: {data: Alert}
+  alert: { data: Alert };
 }
 
 const composeEnhancers =

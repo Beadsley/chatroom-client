@@ -4,7 +4,7 @@ import { makeStyles, AppBar, Toolbar, Typography, IconButton } from '@material-u
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logOutUser } from '../store/actions/actions.user';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     position: 'fixed',

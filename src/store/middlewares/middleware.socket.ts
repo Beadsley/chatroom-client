@@ -13,6 +13,7 @@ import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { currentTimestamp } from '../../services/dateHelper';
 import { config } from '../../config';
+import { constants } from "../../types";
 let socket: SocketIOClient.Socket;
 
 const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (
@@ -67,7 +68,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
         const alert: Alert = {
           type: EReduxAlertActionTypes.CONNECTION_ERROR,
           activated: true,
-          message: 'Server unavailable', //TODO constant
+          message: constants.ALERT_MESSAGE_SERVER_UNAVAILABLE,
         };
         api.dispatch(connectionErrorAlert(alert));
         api.dispatch(logOutUser());
@@ -89,7 +90,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           const alert: Alert = {
             type: EReduxAlertActionTypes.USER_INACTIVE,
             activated: true,
-            message: 'Disconnected by the server due to inactivity', //TODO constant
+            message: constants.ALERT_MESSAGE_USER_INACTIVE,
           };
           api.dispatch(userInactiveAlert(alert));
         } else {

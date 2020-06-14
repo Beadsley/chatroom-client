@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, TextField, Button, withStyles, Theme } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { constants } from '../types';
 import { appendMessage, sendMessage } from '../store/actions/actions.messages';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';

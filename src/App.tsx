@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './components/Landing';
 import { useSelector } from 'react-redux';
-import { makeStyles, useTheme, CircularProgress } from '@material-ui/core';
+import { makeStyles, CircularProgress } from '@material-ui/core';
 import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
 import PrimaryAppBar from './components/Appbar';
@@ -11,7 +11,7 @@ import ChatRoom from './components/ChatRoom';
 import Alert from './components/Alert';
 import { isBrowser } from 'react-device-detect';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   chatRoomContainer: {
     display: 'flex',
     height: '90vh',
@@ -33,7 +33,7 @@ function App() {
     return (
       <>
         <PrimaryAppBar />
-        {isBrowser && <UsersList maxWidth={'20%'}/>}
+        {isBrowser && <UsersList maxWidth={'20%'} />}
         <div className={classes.chatRoomContainer}>
           <ChatRoom maxWidth={isBrowser ? '80%' : '100%'} />
         </div>
