@@ -36,11 +36,12 @@ const useStyles = makeStyles<Theme, InputStyleProps>((theme) => ({
   },
 }));
 
-const StyledButton = withStyles({
+const StyledButton = withStyles((theme) => ({
   root: {
     borderRadius: 0,
+    color: theme.palette.background.paper,
   },
-})(Button);
+}))(Button);
 
 const Input: React.FC<InputProps> = (props) => {
   const user = useSelector((state: RootState): User => state.user.data);

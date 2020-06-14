@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, TextField, Button, makeStyles, withStyles } from '@material-ui/core';
+import { Typography, TextField, Button, makeStyles, withStyles, useTheme } from '@material-ui/core';
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
@@ -25,13 +25,17 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(1),
     },
   },
+  title: {
+    color: theme.palette.primary.dark,
+  },
 }));
 
-const StyledButton = withStyles({
+const StyledButton = withStyles((theme) => ({
   root: {
     borderRadius: 0,
+    color: theme.palette.background.paper,
   },
-})(Button);
+}))(Button);
 
 const LoginForm: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -40,6 +44,7 @@ const LoginForm: React.FC = () => {
   const user = useSelector((state: RootState): User => state.user.data);
   const alert = useSelector((state: RootState): Alert => state.alert.data);
   const classes = useStyles();
+  const theme = useTheme();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisableButton(e.target.value === '');
@@ -55,8 +60,11 @@ const LoginForm: React.FC = () => {
   };
   return (
     <div className={classes.root}>
-      <Typography variant='h3' component='h2'>
-        Log in
+      <Typography variant='h3' component='h3' className={classes.title}>
+        Welcome
+      </Typography>
+      <Typography variant='h5' component='h5' className={classes.title}>
+        Lets get chatty!
       </Typography>
       <form className={classes.form}>
         <TextField
@@ -71,13 +79,7 @@ const LoginForm: React.FC = () => {
             maxLength: 40,
           }}
         />
-        <StyledButton
-          variant='contained'
-          color='primary'
-          onClick={handleSubmit}
-          disabled={disableButton}
-          type='submit'
-        >
+        <StyledButton variant='contained' color='primary' onClick={handleSubmit} disabled={disableButton} type='submit'>
           Sign In
         </StyledButton>
       </form>

@@ -49,7 +49,6 @@ const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
   userBubble: {
     alignSelf: 'flex-end',
     background: theme.palette.secondary.main,
-    color: theme.palette.background.paper,
     borderBottomLeftRadius: BUBBLERRADIUS,
   },
   sendername: {
@@ -87,16 +86,11 @@ const ChatRoom: React.FC<ChatRoomProps> = (props) => {
   }, [messages]);
 
   const showName = (index: number, name: string | undefined): boolean => {
-    return (
-      ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name
-    );
+    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
   };
 
   const showTime = (index: number, name: string | undefined): boolean => {
-    return (
-      (index < messages.length - 1 && messages[index + 1].sender !== name) ||
-      index === messages.length - 1
-    );
+    return (index < messages.length - 1 && messages[index + 1].sender !== name) || index === messages.length - 1;
   };
   return (
     <>
@@ -109,21 +103,19 @@ const ChatRoom: React.FC<ChatRoomProps> = (props) => {
               )}
               {message.sender && (
                 <li
-                  className={`${
-                    user.name === message.sender ? classes.userBubble : classes.senderBubble
-                  } ${classes.listItem} ${classes.bubble}`}
+                  className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
+                    classes.listItem
+                  } ${classes.bubble}`}
                 >
                   {message.text}
                 </li>
               )}
-              {!message.sender && (
-                <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>
-              )}
+              {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
               {message.sender && showTime(index, message.sender) && (
                 <li
-                  className={`${
-                    user.name === message.sender ? classes.usertime : classes.sendername
-                  } ${classes.listItem}`}
+                  className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
+                    classes.listItem
+                  }`}
                 >
                   {timeFormatter(message.timestamp)}
                 </li>
