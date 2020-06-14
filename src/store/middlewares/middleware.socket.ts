@@ -13,7 +13,7 @@ import { Alert, EReduxAlertActionTypes } from '../actions/actions.alert.types';
 import { appendChatuser, disconnectChatuser, inactiveChatuser } from '../actions/actions.chatusers';
 import { currentTimestamp } from '../../services/dateHelper';
 import { config } from '../../config';
-import { constants } from "../../types";
+import { constants } from '../../types';
 let socket: SocketIOClient.Socket;
 
 const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<AnyAction>) => (

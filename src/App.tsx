@@ -33,11 +33,11 @@ function App() {
     return (
       <>
         <PrimaryAppBar />
-        {isBrowser && <UsersList maxWidth={'20%'} />}
+        {isBrowser && <UsersList maxWidth={'30%'} />}
         <div className={classes.chatRoomContainer}>
-          <ChatRoom maxWidth={isBrowser ? '80%' : '100%'} />
+          <ChatRoom maxWidth={isBrowser ? '70%' : '100%'} />
         </div>
-        <Input maxWidth={isBrowser ? '80%' : '100%'} />
+        <Input maxWidth={isBrowser ? '70%' : '100%'} />
       </>
     );
   } else if (user.awaitingResponse) {
