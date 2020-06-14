@@ -1,15 +1,8 @@
 import { EReduxUserActionTypes, User } from './actions.user.types';
 
-export const updateUser = (user: User) => {
+export const connectUser = () => {
   return {
-    type: EReduxUserActionTypes.UPDATE_USER,
-    payload: user,
-  };
-};
-
-export const logOutUser = () => {
-  return {
-    type: EReduxUserActionTypes.LOG_OUT,
+    type: EReduxUserActionTypes.CONNECT_USER,
   };
 };
 
@@ -20,8 +13,15 @@ export const newUser = (name: string) => {
   };
 };
 
-export const connectUser = () => {
+export const updateUser = (user: User) => {
   return {
-    type: EReduxUserActionTypes.CONNECT_USER,
+    type: EReduxUserActionTypes.UPDATE_USER,
+    payload: user,
+  };
+};
+
+export const logOutUser = () => {
+  return {
+    type: EReduxUserActionTypes.LOG_OUT,
   };
 };
