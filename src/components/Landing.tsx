@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, TextField, Button, makeStyles, withStyles, useTheme } from '@material-ui/core';
+import { Typography, TextField, Button, makeStyles, withStyles } from '@material-ui/core';
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
@@ -44,7 +44,6 @@ const LoginForm: React.FC = () => {
   const user = useSelector((state: RootState): User => state.user.data);
   const alert = useSelector((state: RootState): Alert => state.alert.data);
   const classes = useStyles();
-  const theme = useTheme();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisableButton(e.target.value === '');
