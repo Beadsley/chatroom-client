@@ -49,7 +49,7 @@ const LoginForm: React.FC = (props) => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     alert.activated && dispatch(closeAlert());
     e.preventDefault();
-    !user.connected && dispatch(connectUser());
+    !user.connected && !user.awaitingResponse && dispatch(connectUser());
     !user.awaitingResponse && dispatch(newUser(name));
     setName('');
   };

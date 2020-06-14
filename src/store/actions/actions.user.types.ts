@@ -1,7 +1,7 @@
 export enum EReduxUserActionTypes {
   CONNECT_USER = 'CONNECT_USER',
-  UPDATE_USER = 'UPDATE_USER',
   NEW_USER = 'NEW_USER',
+  UPDATE_USER = 'UPDATE_USER',
   LOG_OUT = 'LOG_OUT',
 }
 

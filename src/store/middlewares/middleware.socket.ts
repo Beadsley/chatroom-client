@@ -30,6 +30,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           message: error.message,
         };
         api.dispatch(usernameTakenAlert(alert));
+        api.dispatch(logOutUser());
       });
 
       socket.on('login_success', (name: string) => {
@@ -69,6 +70,7 @@ const socketMiddleware: Middleware = (api: MiddlewareAPI) => (next: Dispatch<Any
           message: 'Server unavailable', //TODO constant
         };
         api.dispatch(connectionErrorAlert(alert));
+        api.dispatch(logOutUser());
         socket.disconnect();
       });
 

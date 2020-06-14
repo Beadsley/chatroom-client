@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './components/Landing';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme, CircularProgress } from '@material-ui/core';
 import { User } from './store/actions/actions.user.types';
 import { RootState } from './store/store';
 import PrimaryAppBar from './components/Appbar';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: '90vh',
     justifyContent: 'flex-end',
   },
-  landingContainer: {
+  container: {
     display: 'flex',
     height: '100vh',
     justifyContent: 'center',
@@ -40,11 +40,17 @@ function App() {
         <Input maxWidth={isBrowser ? '70%' : '100%'} />
       </>
     );
+  } else if (user.awaitingResponse) {
+    return (
+      <div className={classes.container}>
+        <CircularProgress size='10rem' />
+      </div>
+    );
   } else {
     return (
       <>
         <Alert />
-        <div className={classes.landingContainer}>
+        <div className={classes.container}>
           <LoginForm />
         </div>
       </>
