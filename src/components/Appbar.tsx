@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { makeStyles, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import {
+  makeStyles,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+} from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logOutUser } from '../store/actions/actions.user';
 
@@ -26,9 +32,9 @@ const PrimaryAppBar: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleLogOut = (): void => {
+  const handleLogOut = useCallback((): void => {
     dispatch(logOutUser());
-  };
+  }, [dispatch]);
 
   return (
     <div className={classes.root}>
@@ -37,7 +43,12 @@ const PrimaryAppBar: React.FC = () => {
           <Typography variant='h4' className={classes.title} align='center'>
             Lets get chatty!
           </Typography>
-          <IconButton edge='end' color='inherit' aria-label='log-out' onClick={handleLogOut}>
+          <IconButton
+            edge='end'
+            color='inherit'
+            aria-label='log-out'
+            onClick={handleLogOut}
+          >
             <ExitToAppIcon className={classes.icon} />
           </IconButton>
         </Toolbar>

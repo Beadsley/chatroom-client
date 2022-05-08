@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { makeStyles, Theme, Fade } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -6,20 +6,21 @@ import { constants } from '../types';
 import { User } from '../store/actions/actions.user.types';
 import { Message } from '../store/actions/actions.messages.types';
 import { timeFormatter } from '../services/dateHelper';
-import { ChatRoomProps, ChatRoomStyleProps } from '../types';
 
 const BUBBLERRADIUS = 15;
 
-const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
-  root: (props) => ({
-    maxWidth: props.maxWidth,
+const useStyles = makeStyles<Theme>((theme) => ({
+  root: () => ({
+    [theme.breakpoints.down('xs')]: {
+      maxWidth:'100%',
+    },
+    maxWidth: '70%',
     width: '100%',
-    height: '100%',
+    height: 'calc(100% - 56px)',
+    paddingBottom: '60px',
   }),
+
   list: {
-    margin: 0,
-    marginTop: theme.spacing(10),
-    marginBottom: theme.spacing(10),
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -75,62 +76,79 @@ const useStyles = makeStyles<Theme, ChatRoomStyleProps>((theme) => ({
   },
 }));
 
-const ChatRoom: React.FC<ChatRoomProps> = (props) => {
-  const messages = useSelector((state: RootState): Message[] => state.messages.data);
+const ChatRoom: React.FC = () => {
+  const messages = useSelector(
+    (state: RootState): Message[] => state.messages.data
+  );
   const user = useSelector((state: RootState): User => state.user.data);
-  const styleProps: ChatRoomStyleProps = { maxWidth: props.maxWidth };
-  const classes = useStyles(styleProps);
+  const classes = useStyles();
 
-  const scrollDown = (): void => {
-    window.scrollTo(0, document.body.scrollHeight);
-  };
+  const scrollDown = useCallback((): void => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, []);
 
+  // scroll messages intoView
   useEffect(() => {
     scrollDown();
+  }, [messages, scrollDown]);
+
+  const showName = useCallback((index: number, name: string | undefined): boolean => {
+    return (
+      ((index > 0 && messages[index - 1].sender !== name) || index === 0) &&
+      user.name !== name
+    );
+  }, [messages, user.name]);
+
+  const showTime = useCallback((index: number, name: string | undefined): boolean => {
+    return (
+      (index < messages.length - 1 && messages[index + 1].sender !== name) ||
+      index === messages.length - 1
+    );
   }, [messages]);
 
-  const showName = (index: number, name: string | undefined): boolean => {
-    return ((index > 0 && messages[index - 1].sender !== name) || index === 0) && user.name !== name;
-  };
-
-  const showTime = (index: number, name: string | undefined): boolean => {
-    return (index < messages.length - 1 && messages[index + 1].sender !== name) || index === messages.length - 1;
-  };
   return (
-    <>
-      <div className={classes.root}>
-        <ul className={classes.list}>
-          {messages.map((message, index) => (
-            <Fade in={true}>
-              <div className={classes.container} key={index.toString()}>
-                {message.sender && showName(index, message.sender) && (
-                  <li className={`${classes.sendername} ${classes.listItem}`}>{message.sender}</li>
-                )}
-                {message.sender && (
-                  <li
-                    className={`${user.name === message.sender ? classes.userBubble : classes.senderBubble} ${
-                      classes.listItem
-                    } ${classes.bubble}`}
-                  >
-                    {message.text}
-                  </li>
-                )}
-                {!message.sender && <li className={`${classes.information} ${classes.listItem}`}>{message.text}</li>}
-                {message.sender && showTime(index, message.sender) && (
-                  <li
-                    className={`${user.name === message.sender ? classes.usertime : classes.sendername} ${
-                      classes.listItem
-                    }`}
-                  >
-                    {timeFormatter(message.timestamp)}
-                  </li>
-                )}
-              </div>
-            </Fade>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className={classes.root}>
+      <ul className={classes.list}>
+        {messages.map((message, index) => (
+          <Fade in={true} key={`message-${message.sender}-${index}`}>
+            <div className={classes.container} key={index.toString()}>
+              {message.sender && showName(index, message.sender) && (
+                <li className={`${classes.sendername} ${classes.listItem}`}>
+                  {message.sender}
+                </li>
+              )}
+              {message.sender && (
+                <li
+                  className={`${
+                    user.name === message.sender
+                      ? classes.userBubble
+                      : classes.senderBubble
+                  } ${classes.listItem} ${classes.bubble}`}
+                >
+                  {message.text}
+                </li>
+              )}
+              {!message.sender && (
+                <li className={`${classes.information} ${classes.listItem}`}>
+                  {message.text}
+                </li>
+              )}
+              {message.sender && showTime(index, message.sender) && (
+                <li
+                  className={`${
+                    user.name === message.sender
+                      ? classes.usertime
+                      : classes.sendername
+                  } ${classes.listItem}`}
+                >
+                  {timeFormatter(message.timestamp)}
+                </li>
+              )}
+            </div>
+          </Fade>
+        ))}
+      </ul>
+    </div>
   );
 };
 

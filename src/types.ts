@@ -6,20 +6,11 @@ export enum constants {
   ALERT_MESSAGE_USER_INACTIVE = 'Disconnected by the server due to inactivity',
 }
 
-export interface InputProps {
-  maxWidth: string;
-}
-
 export interface InputStyleProps {
-  maxWidth: string;
+  isMobile: boolean;
 }
-
-export interface ChatRoomProps {
-  maxWidth: string;
-}
-
 export interface ChatRoomStyleProps {
-  maxWidth: string;
+  isMobile: boolean;
 }
 
 export interface ChatUserListProps {

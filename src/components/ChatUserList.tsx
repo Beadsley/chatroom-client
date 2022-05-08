@@ -16,11 +16,14 @@ import { constants } from '../types';
 import { Message } from '../store/actions/actions.messages.types';
 import { User } from '../store/actions/actions.user.types';
 import { timeFormatter } from '../services/dateHelper';
-import { ChatUserListProps, ChatUserListStyleProps } from '../types';
 
-const useStyles = makeStyles<Theme, ChatUserListStyleProps>((theme) => ({
-  root: (props) => ({
-    maxWidth: props.maxWidth,
+const useStyles = makeStyles<Theme>((theme) => ({
+  root: () => ({
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+
+    maxWidth: '30%',
     minWidth: '20%',
     top: 60,
     bottom: 0,
@@ -45,16 +48,22 @@ const useStyles = makeStyles<Theme, ChatUserListStyleProps>((theme) => ({
   },
 }));
 
-const UsersList: React.FC<ChatUserListProps> = (props) => {
+const UsersList: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<string | undefined>(undefined);
-  const messages = useSelector((state: RootState): Message[] => state.messages.data);
-  const chatusers = useSelector((state: RootState): Chatuser[] => state.chatusers.data);
+  const messages = useSelector(
+    (state: RootState): Message[] => state.messages.data
+  );
+  const chatusers = useSelector(
+    (state: RootState): Chatuser[] => state.chatusers.data
+  );
   const user = useSelector((state: RootState): User => state.user.data);
-  const styleProps: ChatUserListStyleProps = { maxWidth: props.maxWidth };
-  const classes = useStyles(styleProps);
+  const classes = useStyles();
 
+  // sets the last active user
   useEffect(() => {
-    messages.length > 0 && setCurrentUser(messages[messages.length - 1].sender);
+    if (messages.length > 0) {
+      setCurrentUser(messages[messages.length - 1].sender);
+    }
   }, [messages]);
 
   return (
@@ -62,7 +71,9 @@ const UsersList: React.FC<ChatUserListProps> = (props) => {
       {chatusers.map((chatuser) => (
         <ListItem
           key={chatuser.name}
-          className={currentUser === chatuser.name ? classes.selected : undefined}
+          className={
+            currentUser === chatuser.name ? classes.selected : undefined
+          }
           divider={true}
         >
           <ListItemAvatar>

@@ -9,19 +9,25 @@ import UsersList from './components/ChatUserList';
 import Input from './components/Input';
 import ChatRoom from './components/ChatRoom';
 import Alert from './components/Alert';
-import { isBrowser } from 'react-device-detect';
 
 const useStyles = makeStyles(() => ({
   chatRoomContainer: {
     display: 'flex',
-    height: '90vh',
     justifyContent: 'flex-end',
+    position: 'relative',
+    top: '60px',
+    height: '100%',
   },
   container: {
     display: 'flex',
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  root: {
+    height: '100%',
+    minHeight: '100vh',
+    width: '100%',
   },
 }));
 
@@ -31,14 +37,14 @@ function App() {
 
   if (user.loggedIn) {
     return (
-      <>
+      <div className={classes.root}>
         <PrimaryAppBar />
-        {isBrowser && <UsersList maxWidth={'30%'} />}
+        <UsersList />
         <div className={classes.chatRoomContainer}>
-          <ChatRoom maxWidth={isBrowser ? '70%' : '100%'} />
+          <ChatRoom />
         </div>
-        <Input maxWidth={isBrowser ? '70%' : '100%'} />
-      </>
+        <Input />
+      </div >
     );
   } else if (user.awaitingResponse) {
     return (

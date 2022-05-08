@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, TextField, Button, makeStyles, withStyles } from '@material-ui/core';
+import {
+  Typography,
+  TextField,
+  Button,
+  makeStyles,
+  withStyles,
+} from '@material-ui/core';
 import { RootState } from '../store/store';
 import { newUser, connectUser } from '../store/actions/actions.user';
 import { User } from '../store/actions/actions.user.types';
@@ -78,7 +84,13 @@ const LoginForm: React.FC = () => {
             maxLength: 40,
           }}
         />
-        <StyledButton variant='contained' color='primary' onClick={handleSubmit} disabled={disableButton} type='submit'>
+        <StyledButton
+          variant='contained'
+          color='primary'
+          onClick={handleSubmit}
+          disabled={disableButton}
+          type='submit'
+        >
           Sign In
         </StyledButton>
       </form>
