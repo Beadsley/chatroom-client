@@ -34,7 +34,7 @@ const PrimaryAppBar: React.FC = () => {
 
   const handleLogOut = useCallback((): void => {
     dispatch(logOutUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={classes.root}>

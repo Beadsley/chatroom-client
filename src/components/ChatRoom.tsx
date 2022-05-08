@@ -90,14 +90,14 @@ const ChatRoom: React.FC = () => {
   // scroll messages intoView
   useEffect(() => {
     scrollDown();
-  }, [messages]);
+  }, [messages, scrollDown]);
 
   const showName = useCallback((index: number, name: string | undefined): boolean => {
     return (
       ((index > 0 && messages[index - 1].sender !== name) || index === 0) &&
       user.name !== name
     );
-  }, [messages]);
+  }, [messages, user.name]);
 
   const showTime = useCallback((index: number, name: string | undefined): boolean => {
     return (

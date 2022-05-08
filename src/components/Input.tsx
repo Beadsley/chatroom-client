@@ -82,7 +82,7 @@ const Input: React.FC = () => {
 
       setUserInput('');
     },
-    [userInput, setUserInput]
+    [userInput, setUserInput, user.name, dispatch]
   );
 
   return (
