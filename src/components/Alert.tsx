@@ -23,6 +23,7 @@ const AlertMessage: React.FC = () => {
   const alert = useSelector((state: RootState): AlertType => state.alert.data);
   const [open, setOpen] = React.useState(false);
 
+  // show alert on alert
   useEffect(() => {
     setOpen(alert.activated);
   }, [alert]);
