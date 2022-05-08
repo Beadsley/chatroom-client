@@ -17,10 +17,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    width: '40%',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
+    maxWidth: '600px',
+    padding: '0 16px',
+    width: '100%',
   },
   form: {
     display: 'flex',
@@ -57,8 +56,9 @@ const LoginForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    alert.activated && dispatch(closeAlert());
     e.preventDefault();
+
+    alert.activated && dispatch(closeAlert());
     !user.connected && !user.awaitingResponse && dispatch(connectUser());
     !user.awaitingResponse && dispatch(newUser(name));
     setName('');

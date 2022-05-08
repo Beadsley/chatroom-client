@@ -28,6 +28,11 @@ const AlertMessage: React.FC = () => {
     setOpen(alert.activated);
   }, [alert]);
 
+  const handleCloseAlert = () => {
+    setOpen(false);
+    dispatch(closeAlert());
+  };
+
   return (
     <div className={classes.root}>
       <Collapse in={open}>
@@ -38,10 +43,7 @@ const AlertMessage: React.FC = () => {
               aria-label='close'
               color='inherit'
               size='small'
-              onClick={() => {
-                setOpen(false);
-                dispatch(closeAlert());
-              }}
+              onClick={handleCloseAlert}
             >
               <CloseIcon fontSize='inherit' />
             </IconButton>
