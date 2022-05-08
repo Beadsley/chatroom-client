@@ -5,18 +5,3 @@ export enum constants {
   ALERT_MESSAGE_SERVER_UNAVAILABLE = 'Server unavailable',
   ALERT_MESSAGE_USER_INACTIVE = 'Disconnected by the server due to inactivity',
 }
-
-export interface InputStyleProps {
-  isMobile: boolean;
-}
-export interface ChatRoomStyleProps {
-  isMobile: boolean;
-}
-
-export interface ChatUserListProps {
-  maxWidth: string;
-}
-
-export interface ChatUserListStyleProps {
-  maxWidth: string;
-}
