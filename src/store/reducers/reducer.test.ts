@@ -1,4 +1,5 @@
 import reducers from './reducer.root';
+/* eslint-disable */
 
 describe('Reducers', () => {
   test('INIT', () => {
@@ -161,3 +162,5 @@ describe('Reducers', () => {
     });
   });
 });
+
+/* eslint-enable */
